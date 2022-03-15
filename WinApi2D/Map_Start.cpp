@@ -11,6 +11,7 @@ Map_Start::Map_Start()
 
 Map_Start::~Map_Start()
 {
+
 }
 
 Map_Start* Map_Start::Clone()
