@@ -4,9 +4,9 @@
 
 Map_Start::Map_Start()
 {
-    pimg = CResourceManager::getInst()->LoadD2DImage(L"test", L"texture\\map\\Yoshis Island 2.png");
+    pimg = CResourceManager::getInst()->LoadD2DImage(L"Stage1", L"texture\\map\\Stage1.png");
     SetPos(fPoint(0, 0));
-    SetScale(fPoint(pimg->GetWidth() * 2.f, pimg->GetHeight() * 2.f));
+    SetScale(fPoint(pimg->GetWidth() * 1.4f, pimg->GetHeight() * 1.5f));
 }
 
 Map_Start::~Map_Start()
