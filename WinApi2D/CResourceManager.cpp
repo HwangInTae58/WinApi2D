@@ -187,6 +187,7 @@ CD2DImage* CResourceManager::LoadD2DImage(const wstring& strKey, const wstring& 
 		assert(nullptr);
 	}
 	// 파일을 구성하는 이미지 중에서 첫번째 이미지를 선택한다.
+	//TODO : 여기서 에러걸림
 	if (S_OK != p_decoder->GetFrame(0, &p_frame))
 	{
 		assert(nullptr);
@@ -212,7 +213,7 @@ CD2DImage* CResourceManager::LoadD2DImage(const wstring& strKey, const wstring& 
 	img->SetImage(bitmap);
 	img->SetKey(strKey);
 	img->SetRelativePath(strRelativePath);
-	m_mapD2DImg.insert(make_pair(strFilePath.c_str(), img));
+	m_mapD2DImg.insert(make_pair(strKey.c_str(), img));
 	
 	p_converter->Release();		// 이미지 변환 객체 제거
 	p_frame->Release();			// 그림파일에 있는 이미지를 선택하기 위해 사용한 객체 제거
