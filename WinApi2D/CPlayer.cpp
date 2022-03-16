@@ -13,6 +13,7 @@ CPlayer::CPlayer()
 	SetName(L"Player");
 	SetScale(fPoint(70.f, 70.f));
 
+
 	CreateCollider();
 	GetCollider()->SetScale(fPoint(40.f, 40.f));
 	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));
