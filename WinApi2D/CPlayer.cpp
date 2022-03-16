@@ -19,12 +19,12 @@ CPlayer::CPlayer()
 	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"LeftNone",		m_pImg, fPoint(0.f, 0.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.5f, 2);
-	GetAnimator()->CreateAnimation(L"RightNone",	m_pImg, fPoint(0.f, 70.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.5f, 2);
-	GetAnimator()->CreateAnimation(L"LeftMove",		m_run, fPoint(0.f, 140.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
-	GetAnimator()->CreateAnimation(L"RightMove",	m_run, fPoint(0.f, 210.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
-	GetAnimator()->CreateAnimation(L"LeftHit",		m_run, fPoint(140.f, 0.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
-	GetAnimator()->CreateAnimation(L"RightHit",		m_run, fPoint(140.f, 70.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
+	GetAnimator()->CreateAnimation(L"LeftNone",		m_pImg, fPoint(0.f, 0.f),	fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.5f, 2);
+	GetAnimator()->CreateAnimation(L"RightNone",	m_pImg, fPoint(0.f, 100.f),	fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.5f, 2);
+	GetAnimator()->CreateAnimation(L"LeftMove", m_pImg, fPoint(0.f, 140.f),	fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
+	GetAnimator()->CreateAnimation(L"RightMove", m_pImg, fPoint(0.f, 210.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 3);
+	GetAnimator()->CreateAnimation(L"LeftHit", m_pImg, fPoint(140.f, 0.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
+	GetAnimator()->CreateAnimation(L"RightHit", m_pImg, fPoint(140.f, 70.f), fPoint(70.f, 70.f), fPoint(70.f, 0.f), 0.25f, 1);
 	GetAnimator()->Play(L"LeftNone");
 
 	CAnimation* pAni;
