@@ -4,6 +4,7 @@
 class CMissile : public CGameObject
 {
 private:
+	CD2DImage* m_missile;
 	fVec2 m_fvDir;
 	float m_fVelocity = 400.f;
 

@@ -76,6 +76,7 @@ void ButtonClicked(DWORD_PTR, DWORD_PTR)
 
 void CScene_Tool::Enter()
 {
+	
 	CreateTile(5, 5);
 
 	m_hWnd = CreateDialog(hInst, MAKEINTRESOURCE(IDD_TILEBOX), hWnd, TileWinProc);
@@ -111,6 +112,7 @@ void CScene_Tool::Enter()
 
 void CScene_Tool::Exit()
 {
+	
 	EndDialog(m_hWnd, IDOK);
 	DeleteAll();
 }

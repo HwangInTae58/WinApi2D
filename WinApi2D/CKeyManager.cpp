@@ -60,6 +60,8 @@ void CKeyManager::init()
 	
 }
 
+
+
 bool CKeyManager::GetButton(const int key)
 {
 	return (true == m_arrCurKey[key] && true == m_arrPrevKey[key]);

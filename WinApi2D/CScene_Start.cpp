@@ -24,16 +24,17 @@ void CScene_Start::update()
 
 	if (KeyDown(VK_TAB))
 	{
-		ChangeScn(GROUP_SCENE::TOOL);
+		ChangeScn(GROUP_SCENE::TOOL); //씬 바꾸기
+		
 	}
 
-	if (KeyDown('Z'))
+	if (KeyDown('U'))
 	{
 		CSoundManager::getInst()->AddSound(L"bgm", L"sound\\drumloop.wav", true);
 		CSoundManager::getInst()->Play(L"bgm");
 	}
 
-	if (KeyDown('X'))
+	if (KeyDown('I'))
 	{
 		CSoundManager::getInst()->Stop(L"bgm");
 	}
@@ -43,12 +44,12 @@ void CScene_Start::Enter()
 {
 	// 타일 로딩
 	wstring path = CPathManager::getInst()->GetContentPath();
-	path += L"tile\\Start.tile";
+	path += L"tile\\test2";
 	LoadTile(path);
 
 	// Player 추가
 	CGameObject* pPlayer = new CPlayer;
-	pPlayer->SetPos(fPoint(200, 200));
+	pPlayer->SetPos(fPoint(500, 500));
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 
 	// Monster 추가
@@ -58,7 +59,7 @@ void CScene_Start::Enter()
 	AddObject(pMonster, GROUP_GAMEOBJ::MONSTER);
 
 	CMap* map = new CMap;
-	map->Load(L"Map_Start", L"texture\\map\\Yoshis Island 2.png");
+	map->Load(L"Map_Start", L"texture\\map\\Staegy1.png");
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
 	CBackGround* backGround = new CBackGround;
@@ -73,12 +74,14 @@ void CScene_Start::Enter()
 	// Camera Look 지정
 	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 	CCameraManager::getInst()->SetTargetObj(pPlayer);
-	CCameraManager::getInst()->FadeOut(1.f);
-	CCameraManager::getInst()->FadeIn(1.f);
+	
+	
+	CCameraManager::getInst()->FadeIn(1.f);		//점점 밝아짐
 }
 
 void CScene_Start::Exit()
 {
+	
 	DeleteAll();
 
 	CCollisionManager::getInst()->Reset();

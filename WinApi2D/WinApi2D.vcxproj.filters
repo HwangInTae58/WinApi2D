@@ -67,6 +67,12 @@
     <Filter Include="Object\Map">
       <UniqueIdentifier>{9f3c24ba-7e30-486b-b0ca-8648d10081ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\Tietle">
+      <UniqueIdentifier>{11547292-3e0e-434e-a0ec-978d287eef22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Missile">
+      <UniqueIdentifier>{0b325ef0-416a-47e6-856d-70b38b15ddfa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -153,9 +159,6 @@
     <ClInclude Include="CUI.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="CMissile.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="CMonster.h">
       <Filter>Object\Character</Filter>
     </ClInclude>
@@ -185,6 +188,15 @@
     </ClInclude>
     <ClInclude Include="CBackGround.h">
       <Filter>Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Tietle.h">
+      <Filter>Scene\Tietle</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>Object\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="CPMissile.h">
+      <Filter>Object\Missile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -254,9 +266,6 @@
     <ClCompile Include="CUI.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CMissile.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="CMonster.cpp">
       <Filter>Object\Character</Filter>
     </ClCompile>
@@ -286,6 +295,15 @@
     </ClCompile>
     <ClCompile Include="CBackGround.cpp">
       <Filter>Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Tietle.cpp">
+      <Filter>Scene\Tietle</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>Object\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="CPMissile.cpp">
+      <Filter>Object\Missile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

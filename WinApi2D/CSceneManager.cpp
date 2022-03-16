@@ -3,6 +3,7 @@
 
 #include "CScene_Start.h"
 #include "CScene_Tool.h"
+#include "CScene_Tietle.h"
 
 CSceneManager::CSceneManager()
 {
@@ -46,13 +47,18 @@ void CSceneManager::render()
 
 void CSceneManager::init()
 {
+	//TODO : 이곳에서 씬 추가
+	m_arrScene[(size_t)GROUP_SCENE::TIETLE] = new CScene_Tietle;
+	m_arrScene[(size_t)GROUP_SCENE::TIETLE]->SetName(L"Tietle_Scene");
+
 	m_arrScene[(size_t)GROUP_SCENE::START] = new CScene_Start;
 	m_arrScene[(size_t)GROUP_SCENE::START]->SetName(L"Start_Scene");
 
 	m_arrScene[(size_t)GROUP_SCENE::TOOL] = new CScene_Tool;
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");
 
-	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::START];
+	//TODO : 이곳에서 시작시 신정하기
+	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::TIETLE];
 	m_pCurScene->Enter();
 }
 
