@@ -24,7 +24,7 @@ CMissile::~CMissile()
 
 void CMissile::update()
 {
-	
+	//TODO : 업데이트에 1프레임마다 바뀌게 할려고 했는데 뭔 이상한 버그걸림
 	fPoint pos = GetPos();
 
 	pos.x += m_fVelocity * m_fvDir.x * fDT;

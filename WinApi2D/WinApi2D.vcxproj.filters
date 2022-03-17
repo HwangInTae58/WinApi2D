@@ -73,6 +73,9 @@
     <Filter Include="Object\Missile">
       <UniqueIdentifier>{0b325ef0-416a-47e6-856d-70b38b15ddfa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Tile\Ground">
+      <UniqueIdentifier>{f2db3ee2-c8ce-4101-b0f6-43eeffd8c191}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -198,6 +201,9 @@
     <ClInclude Include="CPMissile.h">
       <Filter>Object\Missile</Filter>
     </ClInclude>
+    <ClInclude Include="CGround.h">
+      <Filter>Object\Tile\Ground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -304,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="CPMissile.cpp">
       <Filter>Object\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="CGround.cpp">
+      <Filter>Object\Tile\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

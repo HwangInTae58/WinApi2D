@@ -14,6 +14,7 @@ CPlayer::CPlayer()
 	m_hit = CResourceManager::getInst()->LoadD2DImage(L"Hit", L"texture\\Animation\\Player\\Hit\\Hit.png");
 	m_shoot = CResourceManager::getInst()->LoadD2DImage(L"Shoot", L"texture\\Animation\\Player\\Shoot\\Shoot.png");
 	m_jump = CResourceManager::getInst()->LoadD2DImage(L"Jump", L"texture\\Animation\\Player\\Jump\\Jump.png");
+
 	SetName(L"Player");
 	SetScale(fPoint(0.f, 0.f));
 
@@ -94,6 +95,7 @@ void CPlayer::update()
 	}
 	if (KeyDown('X'))
 	{
+		//중력을 이용한 점프 적용
 		pos.y -= 20.f * fDT;
 		GetAnimator()->Play(L"UpJump");
 
