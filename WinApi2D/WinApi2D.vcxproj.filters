@@ -58,26 +58,29 @@
     <Filter Include="Object\UI">
       <UniqueIdentifier>{e6177611-ca95-4efd-98d5-4a87ca547807}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Character">
-      <UniqueIdentifier>{a0374c23-f28b-40d4-a4f4-380a7473d4b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resouce\CD2DImage">
       <UniqueIdentifier>{7be60d72-5b7b-4f9d-b116-6bc827b05510}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Map">
       <UniqueIdentifier>{9f3c24ba-7e30-486b-b0ca-8648d10081ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\Tietle">
-      <UniqueIdentifier>{11547292-3e0e-434e-a0ec-978d287eef22}</UniqueIdentifier>
+    <Filter Include="Engine\Component\AI">
+      <UniqueIdentifier>{2de06afb-8706-4063-babc-467d3be46911}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Missile">
-      <UniqueIdentifier>{0b325ef0-416a-47e6-856d-70b38b15ddfa}</UniqueIdentifier>
+    <Filter Include="Engine\Component\AI\State">
+      <UniqueIdentifier>{ce728e5c-3022-41f1-a14b-029c3d2661bf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Title">
-      <UniqueIdentifier>{848076ff-a709-42e8-b286-97b5d3b37709}</UniqueIdentifier>
+      <UniqueIdentifier>{e468732f-8a01-49d5-963a-9f79ee12f68f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Ground">
-      <UniqueIdentifier>{f2db3ee2-c8ce-4101-b0f6-43eeffd8c191}</UniqueIdentifier>
+    <Filter Include="Scene\Title">
+      <UniqueIdentifier>{4bac2b03-e5c1-4d04-b0e5-85577cef5f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Stage">
+      <UniqueIdentifier>{e917dce3-99dd-451e-ba40-3748b472af6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{273cf50d-717e-4945-9b40-2e6ffb4c1e1c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -116,9 +119,6 @@
     </ClInclude>
     <ClInclude Include="CSceneManager.h">
       <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene_Start.h">
-      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="CResource.h">
       <Filter>Resouce</Filter>
@@ -165,12 +165,6 @@
     <ClInclude Include="CUI.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="CUIManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
@@ -195,23 +189,32 @@
     <ClInclude Include="CBackGround.h">
       <Filter>Object\Map</Filter>
     </ClInclude>
-    <ClInclude Include="CScene_Tietle.h">
-      <Filter>Scene\Tietle</Filter>
+    <ClInclude Include="CTileButton.h">
+      <Filter>Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="CMissile.h">
-      <Filter>Object\Missile</Filter>
+    <ClInclude Include="AI.h">
+      <Filter>Engine\Component\AI</Filter>
     </ClInclude>
-    <ClInclude Include="CPMissile.h">
-      <Filter>Object\Missile</Filter>
+    <ClInclude Include="CState.h">
+      <Filter>Engine\Component\AI\State</Filter>
     </ClInclude>
-    <ClInclude Include="CGround.h">
-      <Filter>Object\Ground</Filter>
+    <ClInclude Include="CIdleState.h">
+      <Filter>Engine\Component\AI\State</Filter>
     </ClInclude>
     <ClInclude Include="CImageObject.h">
       <Filter>Object\Title</Filter>
     </ClInclude>
+    <ClInclude Include="CScene_Title.h">
+      <Filter>Scene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Stage1.h">
+      <Filter>Scene\Stage</Filter>
+    </ClInclude>
     <ClInclude Include="CImageButton.h">
-      <Filter>Object\Title</Filter>
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CupHead.h">
+      <Filter>Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -235,9 +238,6 @@
     </ClCompile>
     <ClCompile Include="CSceneManager.cpp">
       <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene_Start.cpp">
-      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="CResource.cpp">
       <Filter>Resouce</Filter>
@@ -281,12 +281,6 @@
     <ClCompile Include="CUI.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="CUIManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
@@ -311,23 +305,32 @@
     <ClCompile Include="CBackGround.cpp">
       <Filter>Object\Map</Filter>
     </ClCompile>
-    <ClCompile Include="CScene_Tietle.cpp">
-      <Filter>Scene\Tietle</Filter>
+    <ClCompile Include="CTileButton.cpp">
+      <Filter>Object\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CMissile.cpp">
-      <Filter>Object\Missile</Filter>
+    <ClCompile Include="AI.cpp">
+      <Filter>Engine\Component\AI</Filter>
     </ClCompile>
-    <ClCompile Include="CPMissile.cpp">
-      <Filter>Object\Missile</Filter>
+    <ClCompile Include="CState.cpp">
+      <Filter>Engine\Component\AI\State</Filter>
     </ClCompile>
-    <ClCompile Include="CGround.cpp">
-      <Filter>Object\Ground</Filter>
+    <ClCompile Include="CIdleState.cpp">
+      <Filter>Engine\Component\AI\State</Filter>
     </ClCompile>
     <ClCompile Include="CImageObject.cpp">
       <Filter>Object\Title</Filter>
     </ClCompile>
+    <ClCompile Include="CScene_Title.cpp">
+      <Filter>Scene\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Stage1.cpp">
+      <Filter>Scene\Stage</Filter>
+    </ClCompile>
     <ClCompile Include="CImageButton.cpp">
-      <Filter>Object\Title</Filter>
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CupHead.cpp">
+      <Filter>Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

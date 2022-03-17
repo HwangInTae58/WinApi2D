@@ -1,15 +1,16 @@
 #pragma once
 #include "CScene.h"
-
-class CScene_Start : public CScene
+class CScene_Stage1 : public CScene
 {
 public:
-	CScene_Start();
-	virtual ~CScene_Start();
+	CScene_Stage1();
+	virtual ~CScene_Stage1();
+
 
 	virtual void update();
 
 	virtual void Enter();
 	virtual void Exit();
+
 };
 

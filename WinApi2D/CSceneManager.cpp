@@ -1,9 +1,9 @@
 #include "framework.h"
 #include "CSceneManager.h"
 
-#include "CScene_Start.h"
+#include "CScene_Title.h"
+#include "CScene_Stage1.h"
 #include "CScene_Tool.h"
-#include "CScene_Tietle.h"
 
 CSceneManager::CSceneManager()
 {
@@ -47,18 +47,16 @@ void CSceneManager::render()
 
 void CSceneManager::init()
 {
-	//TODO : 이곳에서 씬 추가
-	m_arrScene[(size_t)GROUP_SCENE::TIETLE] = new CScene_Tietle;
-	m_arrScene[(size_t)GROUP_SCENE::TIETLE]->SetName(L"Tietle_Scene");
+	m_arrScene[(size_t)GROUP_SCENE::TITLE] = new CScene_Title;
+	m_arrScene[(size_t)GROUP_SCENE::TITLE]->SetName(L"Title_Scene");
 
-	m_arrScene[(size_t)GROUP_SCENE::START] = new CScene_Start;
-	m_arrScene[(size_t)GROUP_SCENE::START]->SetName(L"Start_Scene");
+	m_arrScene[(size_t)GROUP_SCENE::STAGE_01] = new CScene_Stage1;
+	m_arrScene[(size_t)GROUP_SCENE::STAGE_01]->SetName(L"Stage1_Scene");
 
 	m_arrScene[(size_t)GROUP_SCENE::TOOL] = new CScene_Tool;
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");
 
-	//TODO : 이곳에서 시작시 신정하기
-	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::TIETLE];
+	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::TITLE];
 	m_pCurScene->Enter();
 }
 

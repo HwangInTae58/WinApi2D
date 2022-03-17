@@ -13,8 +13,8 @@ CImageButton::~CImageButton()
 
 void CImageButton::render()
 {
-    if (nullptr == m_pImg)
-        return;
+	if (nullptr == m_pImg)
+		return;
 
     CRenderManager::getInst()->RenderImage(
         m_pImg,
@@ -31,16 +31,16 @@ void CImageButton::render()
         GetPos().x + GetScale().x,
         GetPos().y + GetScale().y,
         20.f,
-        RGB(255, 255, 255)
+        RGB(0, 0, 0)
     );
 }
 
 void CImageButton::Load(const wstring& strKey, const wstring& strPath)
 {
-    m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
+	m_pImg = CResourceManager::getInst()->LoadD2DImage(strKey, strPath);
 }
 
 void CImageButton::SetText(const wstring& str)
 {
-    m_strText = str;
+	m_strText = str;
 }
