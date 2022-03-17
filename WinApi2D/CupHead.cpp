@@ -7,11 +7,12 @@
 CupHead::CupHead()
 {
 	//»çÁø ºÒ·¯¿À±â
-	m_pImg = CResourceManager::getInst()->LoadD2DImage(L"PlayerImg", L"texture\\Animation\\Idle_Aim\\Stay.png");
-
+	m_Intro = CResourceManager::getInst()->LoadD2DImage(L"Intro", L"texture\\Animation\\Intro\\Intro.png");
+	m_Idle = CResourceManager::getInst()->LoadD2DImage(L"Idle", L"texture\\Animation\\Idle_Aim\\Stay.png");
+	m_run = CResourceManager::getInst()->LoadD2DImage(L"Run", L"texture\\Animation\\Run\\Run.png");
 	SetName(L"Player");
 	//À§Ä¡ Å©±â ÁöÁ¤
-	SetPos(fPoint(100.f,550.f));
+	SetPos(fPoint(100.f,598.f));
 	SetScale(fPoint(70.f, 100.f));
 
 	//Ãæµ¹Ã¼
@@ -21,7 +22,21 @@ CupHead::CupHead()
 
 	//¾Ö´Ï¸ŞÀÌ¼Ç »ı¼º
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"None", m_pImg, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5);
+	GetAnimator()->CreateAnimation(L"intro", m_Intro, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.1f, 28);
+	GetAnimator()->CreateAnimation(L"RNone", m_Idle, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, false/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"LNone", m_Idle, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"RA", m_Idle, fPoint(0.f, 100.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, false/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"LA", m_Idle, fPoint(0.f,100.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"RU", m_Idle, fPoint(0.f, 200.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, false/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"LU", m_Idle, fPoint(0.f, 200.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"RD", m_Idle, fPoint(0.f, 300.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, false/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"LD", m_Idle, fPoint(0.f, 300.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"RUD", m_Idle, fPoint(0.f, 400.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, false/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"LUD", m_Idle, fPoint(0.f, 400.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"RDD", m_Idle, fPoint(0.f, 500.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, false/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"LDD", m_Idle, fPoint(0.f, 500.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"LRun", m_run, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, true/*ÁÂ¿ì ¹İÀü*/);
+	GetAnimator()->CreateAnimation(L"RRun", m_run, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, false/*ÁÂ¿ì ¹İÀü*/);
 	GetAnimator()->Play(L"None");
 }
 
@@ -37,7 +52,27 @@ CupHead* CupHead::Clone()
 void CupHead::update()
 {
 	fPoint pos = GetPos();
+	//TODO : ÀÎÆ®·Î ³Ö±â °Ì³ª ¾î·Æ³×.....
+	/*if (m_Intro != nullptr)
+	{
+		GetAnimator()->Play(L"intro");
+		Sleep(2000);
+		m_Intro = nullptr;
+	}*/
+		
 
+		if (Key(VK_LEFT))
+		{
+			pos.x -= m_fSpeed * fDT;
+			GetAnimator()->Play(L"LRun");
+		}
+		if (Key(VK_RIGHT))
+		{
+			pos.x += m_fSpeed * fDT;
+			GetAnimator()->Play(L"RRun");
+		}
+
+		
 	GetAnimator()->update();
 }
 

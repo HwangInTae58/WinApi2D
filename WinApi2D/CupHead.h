@@ -3,7 +3,9 @@
 class CupHead : public CGameObject
 {
 private:
-	CD2DImage* m_pImg;
+	CD2DImage* m_Intro;
+	CD2DImage* m_Idle;
+	CD2DImage* m_run;
 	float m_fSpeed = 300;
 
 public:

@@ -57,7 +57,7 @@ void CKeyManager::update()
 
 void CKeyManager::init()
 {
-	
+
 }
 
 bool CKeyManager::GetButton(const int key)
@@ -72,6 +72,12 @@ bool CKeyManager::GetButtonUP(const int key)
 
 bool CKeyManager::GetButtonDOWN(const int key)
 {
+	return (true == m_arrCurKey[key] && false == m_arrPrevKey[key]);
+}
+
+bool CKeyManager::NonButton(const int key)
+{
+	
 	return (true == m_arrCurKey[key] && false == m_arrPrevKey[key]);
 }
 

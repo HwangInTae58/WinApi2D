@@ -15,6 +15,11 @@ CScene_Stage1::~CScene_Stage1()
 void CScene_Stage1::update()
 {
 	CScene::update();
+
+	if (KeyDown(VK_ESCAPE))
+	{
+		ChangeScn(GROUP_SCENE::TITLE);
+	}
 }
 
 void CScene_Stage1::Enter()
@@ -38,6 +43,15 @@ void CScene_Stage1::Enter()
 	backGround->Load(L"BackGround_Start", L"texture\\background\\background.png");
 	backGround->SetPos(fPoint(-100.f, -500.f));
 	AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
+
+
+
+
+
+	// Camera Look ÁöÁ¤
+	CCameraManager::getInst()->SetLookAt(fPoint(WINSIZEX, WINSIZEY));
+	CCameraManager::getInst()->SetTargetObj(pPlayer);
+	CCameraManager::getInst()->FadeIn(1.f);
 }
 
 void CScene_Stage1::Exit()
