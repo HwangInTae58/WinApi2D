@@ -37,7 +37,7 @@ CupHead::CupHead()
 	GetAnimator()->CreateAnimation(L"LDD", m_Idle, fPoint(0.f, 500.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*ÁÂ¿ì ¹İÀü*/);
 	GetAnimator()->CreateAnimation(L"LRun", m_run, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, true/*ÁÂ¿ì ¹İÀü*/);
 	GetAnimator()->CreateAnimation(L"RRun", m_run, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, false/*ÁÂ¿ì ¹İÀü*/);
-	GetAnimator()->Play(L"None");
+	GetAnimator()->Play(L"RNone");
 }
 
 CupHead::~CupHead()
@@ -59,7 +59,16 @@ void CupHead::update()
 		Sleep(2000);
 		m_Intro = nullptr;
 	}*/
-		
+	
+	if (CKeyManager::getInst()->PreButton(VK_RIGHT))
+	{
+		GetAnimator()->Play(L"RNone");
+	}
+	
+	if (CKeyManager::getInst()->PreButton(VK_LEFT))
+	{
+		GetAnimator()->Play(L"LNone");
+	}
 
 		if (Key(VK_LEFT))
 		{
@@ -72,7 +81,7 @@ void CupHead::update()
 			GetAnimator()->Play(L"RRun");
 		}
 
-		
+	SetPos(pos);
 	GetAnimator()->update();
 }
 

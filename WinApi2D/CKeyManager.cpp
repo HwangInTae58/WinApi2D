@@ -75,10 +75,10 @@ bool CKeyManager::GetButtonDOWN(const int key)
 	return (true == m_arrCurKey[key] && false == m_arrPrevKey[key]);
 }
 
-bool CKeyManager::NonButton(const int key)
+bool CKeyManager::PreButton(const int key)
 {
 	
-	return (true == m_arrCurKey[key] && false == m_arrPrevKey[key]);
+	return (m_arrPrevKey[key]);
 }
 
 fPoint CKeyManager::GetMousePos()
