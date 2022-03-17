@@ -73,7 +73,10 @@
     <Filter Include="Object\Missile">
       <UniqueIdentifier>{0b325ef0-416a-47e6-856d-70b38b15ddfa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Tile\Ground">
+    <Filter Include="Object\Title">
+      <UniqueIdentifier>{848076ff-a709-42e8-b286-97b5d3b37709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Ground">
       <UniqueIdentifier>{f2db3ee2-c8ce-4101-b0f6-43eeffd8c191}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -202,7 +205,13 @@
       <Filter>Object\Missile</Filter>
     </ClInclude>
     <ClInclude Include="CGround.h">
-      <Filter>Object\Tile\Ground</Filter>
+      <Filter>Object\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="CImageObject.h">
+      <Filter>Object\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CImageButton.h">
+      <Filter>Object\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -312,7 +321,13 @@
       <Filter>Object\Missile</Filter>
     </ClCompile>
     <ClCompile Include="CGround.cpp">
-      <Filter>Object\Tile\Ground</Filter>
+      <Filter>Object\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="CImageObject.cpp">
+      <Filter>Object\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="CImageButton.cpp">
+      <Filter>Object\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

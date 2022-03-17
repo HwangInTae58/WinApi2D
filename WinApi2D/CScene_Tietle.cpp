@@ -1,43 +1,62 @@
 #include "framework.h"
-#include "CGameObject.h"
-#include "CScene_Tietle.h"
-#include "CBackGround.h"
-#include "CAnimator.h"
-#include "CAnimation.h"
+#include "CScene_Title.h"
+#include "CImageObjecet.h"
+#include "CImageButton.h"
 
-CScene_Tietle::CScene_Tietle()
+CScene_Title::CScene_Title()
 {
 }
 
-CScene_Tietle::~CScene_Tietle()
+CScene_Title::~CScene_Title()
 {
 }
 
-void CScene_Tietle::update()
+void ClickStartButton(DWORD_PTR, DWORD_PTR)
 {
-	//이곳에 스타트 버튼
-	//종료버튼 만들기
-	if (KeyDown(VK_RETURN))
-	{
-		ChangeScn(GROUP_SCENE::START); //씬 바꾸기
-		Exit();
-	}
+	//ChangeScn(GROUP_SCENE::STAGE_01);
 }
 
-void CScene_Tietle::Enter()
+void ClickExitButton(DWORD_PTR, DWORD_PTR)
 {
-	//TODO : 여기 신나가면서 백그라운드가 안지워짐
-	CCameraManager::getInst()->FadeIn(1.f);		//점점 밝아짐
-	CBackGround* TietlebackGround = new CBackGround;
-	TietlebackGround->Load(L"BackGround_Start", L"texture\\background\\Background\\title_background.png");
-	TietlebackGround->SetPos(fPoint(0.f, 0.f));
-	TietlebackGround->SetScale(fPoint(TietlebackGround->GetScale().x / 4, TietlebackGround->GetScale().y / 4));
-	AddObject(TietlebackGround, GROUP_GAMEOBJ::TITLEBACKGROUND);
-
-
+	PostQuitMessage(0);
 }
 
-void CScene_Tietle::Exit()
+void CScene_Title::Enter()
 {
-	DeleteAll();
+	// TODO :
+	// 1. 배경 출력
+	CImageObject* backgroundObject = new CImageObject;
+	backgroundObject->Load(L"BackImage", L"texture\\background.png");
+	backgroundObject->SetPos(fPoint(0.f, 0.f));
+	backgroundObject->SetScale(fPoint(WINSIZEX, WINSIZEY));
+	AddObject(backgroundObject, GROUP_GAMEOBJ::BACKGROUND);
+
+	// 2. 로고 출력용 오브젝트 제작
+	CImageObject* logoObject = new CImageObject;
+	logoObject->Load(L"LogoImage", L"texture\\titleImage.png");
+	logoObject->SetPos(fPoint(100.f, 100.f));
+	logoObject->SetScale(fPoint(1080.f, 200.f));
+	AddObject(logoObject, GROUP_GAMEOBJ::BACKGROUND);
+
+	// 3. 시작 버튼
+	CImageButton* startButton = new CImageButton;
+	startButton->Load(L"Button", L"texture\\button.png");
+	startButton->SetText(L"시작 하기");
+	startButton->SetPos(fPoint(WINSIZEX / 2.f - 100.f, 500.f));
+	startButton->SetScale(fPoint(200.f, 50.f));
+	startButton->SetClickedCallBack(ClickStartButton, 0, 0);
+	AddObject(startButton, GROUP_GAMEOBJ::UI);
+	// 4. 종료 버튼
+
+	CImageButton* exitButton = new CImageButton;
+	exitButton->Load(L"Button", L"texture\\button.png");
+	exitButton->SetText(L"종료");
+	exitButton->SetPos(fPoint(WINSIZEX / 2.f - 100.f, 600.f));
+	exitButton->SetScale(fPoint(200.f, 50.f));
+	exitButton->SetClickedCallBack(ClickExitButton, 0, 0);
+	AddObject(exitButton, GROUP_GAMEOBJ::UI);
+}
+
+void CScene_Title::Exit()
+{
 }
