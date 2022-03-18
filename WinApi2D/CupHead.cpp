@@ -3,7 +3,9 @@
 
 #include "CCollider.h"
 #include "CAnimator.h"
+#include "CRigidBody.h"
 #include "CAnimation.h"
+#include "CGravity.h"
 CupHead::CupHead()
 {
 	//사진 불러오기
@@ -12,7 +14,7 @@ CupHead::CupHead()
 	m_run = CResourceManager::getInst()->LoadD2DImage(L"Run", L"texture\\Animation\\Run\\Run.png");
 	SetName(L"Player");
 	//위치 크기 지정
-	SetPos(fPoint(100.f,598.f));
+	SetPos(fPoint(100.f,600.f));
 	SetScale(fPoint(70.f, 100.f));
 
 	//충돌체
@@ -37,6 +39,8 @@ CupHead::CupHead()
 	GetAnimator()->CreateAnimation(L"LDD", m_Idle, fPoint(0.f, 500.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"LRun", m_run, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, true/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"RRun", m_run, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, false/*좌우 반전*/);
+
+	CreateGravity();
 	GetAnimator()->Play(L"RNone");
 }
 
@@ -52,40 +56,71 @@ CupHead* CupHead::Clone()
 void CupHead::update()
 {
 	fPoint pos = GetPos();
-	//TODO : 인트로 넣기 겁나 어렵네.....
-	/*if (m_Intro != nullptr)
-	{
-		GetAnimator()->Play(L"intro");
-		Sleep(2000);
-		m_Intro = nullptr;
-	}*/
+	pRigid = GetRigidBody();
+	update_move();
+	update_animation();
+	//update_gravity();
 	
-	if (CKeyManager::getInst()->PreButton(VK_RIGHT))
-	{
-		GetAnimator()->Play(L"RNone");
-	}
-	
-	if (CKeyManager::getInst()->PreButton(VK_LEFT))
-	{
-		GetAnimator()->Play(L"LNone");
-	}
-
-		if (Key(VK_LEFT))
-		{
-			pos.x -= m_fSpeed * fDT;
-			GetAnimator()->Play(L"LRun");
-		}
-		if (Key(VK_RIGHT))
-		{
-			pos.x += m_fSpeed * fDT;
-			GetAnimator()->Play(L"RRun");
-		}
-
-	SetPos(pos);
 	GetAnimator()->update();
 }
 
 void CupHead::render()
 {
 	component_render();
+}
+
+void CupHead::update_move()
+{
+	fPoint pos = GetPos();
+	CRigidBody* pRigid = GetRigidBody();
+
+	m_fVelocity = 0.f;
+
+	if (Key(VK_LEFT))
+	{
+		//pRigid->AddForce(fPoint(-200.f, 0.f));
+		pos.x -= m_fSpeed * fDT;
+		m_fVelocity = m_fSpeed;
+		m_bIsLeft = true;
+	}
+
+	if (Key(VK_RIGHT))
+	{
+		//pRigid->AddForce(fPoint(200.f, 0.f));
+		pos.x += m_fSpeed * fDT;
+		m_fVelocity = m_fSpeed;
+		m_bIsLeft = false;
+	}
+	SetPos(pos);
+}
+
+void CupHead::update_animation()
+{
+	if (m_bIsLeft)
+	{
+		if (m_fVelocity > 0)
+		{
+			GetAnimator()->Play(L"LRun");
+		}
+		else
+		{
+			GetAnimator()->Play(L"LNone");
+		}
+	}
+	else
+	{
+		if (m_fVelocity > 0)
+		{
+			GetAnimator()->Play(L"RRun");
+		}
+		else
+		{
+			GetAnimator()->Play(L"RNone");
+		}
+	}
+}
+
+void CupHead::update_gravity()
+{
+	GetRigidBody()->AddForce(fPoint(0.f, 500.f));
 }

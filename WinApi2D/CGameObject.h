@@ -2,6 +2,9 @@
 
 class CCollider;
 class CAnimator;
+class CRigidBody;
+class CGravity;
+
 
 class CGameObject
 {
@@ -15,6 +18,8 @@ private:
 	// Component
 	CCollider* m_pCollider;
 	CAnimator* m_pAnimator;
+	CRigidBody* m_pRigidBody;
+	CGravity* m_pGravity;
 
 	bool m_bAlive;
 	void SetDead();
@@ -34,6 +39,8 @@ public:
 	wstring GetName();
 
 	bool isDead();
+	
+	virtual void start(); //개체가 생성되고, 세팅된 후에 씬이 시작되기 직전에 호출
 
 	virtual void update() = 0;			// 반드시 상속받은 객체가 update를 구현하도록 순수가상함수로 선언
 	virtual void finalupdate();			// 상속받는 클래스가 오버라이딩 할 수 없게 막는 final 키워드
@@ -49,5 +56,11 @@ public:
 
 	CAnimator* GetAnimator();				// 애니메이터 반환
 	void CreateAnimator();					// 애니메이터 생성
+
+	CRigidBody* GetRigidBody();
+	void CreateRigidBody();
+
+	CGravity* GetGravity();
+	void CreateGravity();
 };
 

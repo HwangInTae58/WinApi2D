@@ -2,6 +2,8 @@
 #include "CGameObject.h"
 #include "CCollider.h"
 #include "CAnimator.h"
+#include "CRigidBody.h"
+#include "CGravity.h"
 
 CGameObject::CGameObject()
 {
@@ -9,7 +11,9 @@ CGameObject::CGameObject()
 	m_fptScale = {};
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
+	m_pRigidBody = nullptr;
 	m_bAlive = true;
+	m_pGravity = nullptr;
 }
 
 CGameObject::CGameObject(const CGameObject& other)
@@ -19,6 +23,8 @@ CGameObject::CGameObject(const CGameObject& other)
 	m_fptScale	= other.m_fptScale;
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
+	m_pRigidBody = nullptr;
+	m_pGravity = nullptr;
 	m_bAlive	= true;
 
 	if (nullptr != other.m_pCollider)
@@ -26,10 +32,22 @@ CGameObject::CGameObject(const CGameObject& other)
 		m_pCollider = new CCollider(*other.m_pCollider);
 		m_pCollider->m_pOwner = this;
 	}
+	
 	if (nullptr != other.m_pAnimator)
 	{
 		m_pAnimator = new CAnimator(*other.m_pAnimator);
 		m_pAnimator->m_pOwner = this;
+	}
+	if (nullptr != other.m_pRigidBody)
+	{
+		m_pRigidBody = new CRigidBody(*other.m_pRigidBody);
+		m_pRigidBody->m_pOwner = this;
+	}
+
+	if (nullptr != other.m_pGravity)
+	{
+		m_pGravity = new CGravity(*other.m_pGravity);
+		m_pGravity->m_pOwner = this;
 	}
 }
 
@@ -42,6 +60,14 @@ CGameObject::~CGameObject()
 	if (nullptr != m_pAnimator)
 	{
 		delete m_pAnimator;
+	}
+	if (nullptr != m_pRigidBody)
+	{
+		delete m_pRigidBody;
+	}
+	if (nullptr != m_pGravity)
+	{
+		delete m_pGravity;
 	}
 }
 
@@ -80,6 +106,10 @@ bool CGameObject::isDead()
 	return !m_bAlive;
 }
 
+void CGameObject::start()
+{
+}
+
 void CGameObject::SetDead()
 {
 	m_bAlive = false;
@@ -90,6 +120,14 @@ void CGameObject::finalupdate()
 	if (nullptr != m_pCollider)
 	{
 		m_pCollider->finalupdate();
+	}
+	if (nullptr != m_pRigidBody)
+	{
+		m_pRigidBody->finalupdate();
+	}
+	if (nullptr != m_pGravity)
+	{
+		m_pGravity->finalupdate();
 	}
 }
 
@@ -140,4 +178,28 @@ void CGameObject::CreateAnimator()
 {
 	m_pAnimator = new CAnimator;
 	m_pAnimator->m_pOwner = this;
+}
+
+CRigidBody* CGameObject::GetRigidBody()
+{
+	return m_pRigidBody;
+}
+
+void CGameObject::CreateRigidBody()
+{
+	m_pRigidBody = new CRigidBody;
+	m_pRigidBody->m_pOwner = this;
+}
+
+
+
+CGravity* CGameObject::GetGravity()
+{
+	return m_pGravity;
+}
+
+void CGameObject::CreateGravity()
+{
+	m_pGravity = new CGravity();
+	m_pGravity->m_pOwner = this;
 }

@@ -161,6 +161,7 @@
     <ClInclude Include="CD2DImage.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CGameObject.h" />
+    <ClInclude Include="CGravity.h" />
     <ClInclude Include="CGround.h" />
     <ClInclude Include="CIdleState.h" />
     <ClInclude Include="CImageButton.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="CRenderManager.h" />
     <ClInclude Include="CResource.h" />
     <ClInclude Include="CResourceManager.h" />
+    <ClInclude Include="CRigidBody.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CScene_Stage1.h" />
@@ -208,6 +210,7 @@
     <ClCompile Include="CD2DImage.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
+    <ClCompile Include="CGravity.cpp" />
     <ClCompile Include="CGround.cpp" />
     <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CImageButton.cpp" />
@@ -218,6 +221,7 @@
     <ClCompile Include="CRenderManager.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CResourceManager.cpp" />
+    <ClCompile Include="CRigidBody.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CScene_Stage1.cpp" />

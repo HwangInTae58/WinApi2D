@@ -46,6 +46,17 @@ void CScene::finalupdate()
     }
 }
 
+void CScene::start()
+{
+    for (UINT i = 0; i < (UINT)GROUP_TILE::SIZE; i++)
+    {
+        for (size_t j = 0; j < m_arrObj[i].size(); j++)
+        {
+            m_arrObj[i][j]->start();
+        }
+    }
+}
+
 void CScene::render()
 {
     // 씬이 가진 모든 오브젝트 render
@@ -105,6 +116,8 @@ void CScene::AddObject(CGameObject* pObj, GROUP_GAMEOBJ type)
 {
     m_arrObj[(int)type].push_back(pObj);
 }
+
+
 
 void CScene::DeleteGroup(GROUP_GAMEOBJ group)
 {
