@@ -161,6 +161,7 @@
     <ClInclude Include="CD2DImage.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CGameObject.h" />
+    <ClInclude Include="CGround.h" />
     <ClInclude Include="CIdleState.h" />
     <ClInclude Include="CImageButton.h" />
     <ClInclude Include="CImageObject.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="CD2DImage.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
+    <ClCompile Include="CGround.cpp" />
     <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CImageButton.cpp" />
     <ClCompile Include="CImageObject.cpp" />
