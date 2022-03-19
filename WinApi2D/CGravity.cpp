@@ -11,21 +11,19 @@ CGravity::~CGravity()
 
 fPoint CGravity::gravity()
 {
-
-    return fPoint();
+	return fPoint();
 }
 
 CGravity* CGravity::Clone()
 {
-    return nullptr;
-}
-
-void CGravity::SetGround(bool _b)
-{
-    m_bGround = _b;
+	return new CGravity(*this);
 }
 
 void CGravity::finalupdate()
+{
+}
+
+void CGravity::SetGround(bool _b)
 {
 }
 

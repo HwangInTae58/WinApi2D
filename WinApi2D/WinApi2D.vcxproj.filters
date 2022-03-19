@@ -86,10 +86,7 @@
       <UniqueIdentifier>{80ec21ed-3a2b-410a-b34a-911928b7c8aa}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Gravity">
-      <UniqueIdentifier>{69770b96-0f8d-4e34-9bce-e47859391e32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\RigidBody">
-      <UniqueIdentifier>{7bf7e60f-09bd-4a96-98d1-5c03c0fc9a74}</UniqueIdentifier>
+      <UniqueIdentifier>{7419bbc1-f18f-4131-b211-cbae32737599}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -231,8 +228,8 @@
     <ClInclude Include="CGravity.h">
       <Filter>Object\Gravity</Filter>
     </ClInclude>
-    <ClInclude Include="CRigidBody.h">
-      <Filter>Object\RigidBody</Filter>
+    <ClInclude Include="CMissile.h">
+      <Filter>Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -356,8 +353,8 @@
     <ClCompile Include="CGravity.cpp">
       <Filter>Object\Gravity</Filter>
     </ClCompile>
-    <ClCompile Include="CRigidBody.cpp">
-      <Filter>Object\RigidBody</Filter>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
