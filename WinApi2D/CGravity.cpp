@@ -19,18 +19,14 @@ CGravity* CGravity::Clone()
 	return new CGravity(*this);
 }
 
-void CGravity::finalupdate()
-{
-}
-
 void CGravity::SetGround(bool _b)
 {
 }
 
 void CGravity::update()
 {
+	fPoint pos = GetPos();
+
 }
 
-void CGravity::render()
-{
-}
+

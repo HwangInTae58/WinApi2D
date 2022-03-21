@@ -28,7 +28,7 @@ void CScene_Stage1::Enter()
 	wstring path = CPathManager::getInst()->GetContentPath();
 	path += L"tile\\Stage1";
 	LoadTile(path);
-
+	
 	// Player Ãß°¡
 	CGameObject* pPlayer = new CupHead;
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);

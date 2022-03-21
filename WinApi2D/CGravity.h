@@ -10,6 +10,7 @@ class CGravity : public CGameObject
 private:
 	CGameObject* m_pOwner;
 	bool     m_bGround;
+
 	
 public:
 	CGravity();
@@ -17,9 +18,7 @@ public:
 	fPoint gravity();
 	virtual CGravity* Clone();
 
-	virtual void finalupdate();
 	void SetGround(bool _b);
 	virtual void update();
-	virtual void render();
 };
 

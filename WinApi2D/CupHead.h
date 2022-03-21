@@ -26,6 +26,7 @@ private:
 	CD2DImage* m_run;
 	CD2DImage* m_shoot;
 	float m_fSpeed = 300;
+	float m_fForce;
 
 	int m_bIs;	// 1 Left, 2Right , 3 Up, 4 Down
 	float m_fVelocity;
@@ -38,6 +39,7 @@ public:
 	virtual void OnCollision(CCollider* _pOther);
 
 	void CreateMissile();
+	void CreateGravity();
 
 	virtual void update();
 	virtual void render();

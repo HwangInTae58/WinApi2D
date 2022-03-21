@@ -2,6 +2,7 @@
 #include "CupHead.h"
 #include "CMissile.h"
 #include "CCollider.h"
+#include "CGravity.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
 
@@ -81,22 +82,7 @@ void CupHead::render()
 }
 void CupHead::Jump()
 {
-	float y = GetPos().y;
-	float gravity = 0.0f;     // 중력느낌용
-	int direction = 0;       // 0:정지상태, 1:점프중, 2:다운중
-	// 설정값
-	const float jump_speed = 0.2f;  // 점프속도
-	const float jump_accell = 0.01f; // 점프가속
-	const float y_base = 0.5f;      // 캐릭터가 서있는 기준점
-	y += gravity;
-	if (gravity <= 0.0f)
-	{
-		direction = 2;
-	}
-	else
-	{
-		gravity -= jump_accell;
-	}
+	
 
 }
 
@@ -108,6 +94,7 @@ void CupHead::OnCollision(CCollider* _pOther)
 		fPoint Pos = GetPos();
 		if (Pos.y < pOtherObj->GetPos().y)
 		{
+			Pos.y = pOtherObj->GetPos().y;
 			PLAYER_MOVE::IDLE;
 		}
 	}
@@ -132,6 +119,13 @@ void CupHead::CreateMissile()
 	pMissile->SetName(L"Missile");
 	CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
 }
+
+void CupHead::CreateGravity()
+{
+	CGravity* pGravity = new CGravity;
+	pGravity->SetName(L"Gravity");
+	CreateObj(pGravity, GROUP_GAMEOBJ::GRAVITY);
+}
 	
 void CupHead::update_move()
 {
@@ -154,17 +148,31 @@ void CupHead::update_move()
 		m_fVelocity = m_fSpeed;
 		m_bIs = 2;
 	}
-
+	if (Key(VK_DOWN))
+	{
+		PLAYER_MOVE::RUN;
+		pos.y += m_fSpeed * fDT;
+		m_fVelocity = m_fSpeed;
+		m_bIs = 2;
+	}
+	if (Key(VK_UP))
+	{
+		PLAYER_MOVE::RUN;
+		pos.y -= m_fSpeed * fDT;
+		m_fVelocity = m_fSpeed;
+		m_bIs = 2;
+	}
 	if (KeyDown('Z'))
 	{
 		PLAYER_MOVE::JUMP;
-		Jump();
-		m_fVelocity = m_fSpeed;
+		pos.y -= m_fSpeed;
+		
 	}
 	if (KeyDown('X'))
 	{
 		CreateMissile();
 	}
+
 	SetPos(pos);
 }
 
@@ -192,6 +200,7 @@ void CupHead::update_animation()
 			GetAnimator()->Play(L"RNone");
 		}
 	}
+
 }
 
 
