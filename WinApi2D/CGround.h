@@ -1,19 +1,19 @@
 #pragma once
 #include "CGameObject.h"
-class CGround : public CGameObject
+#include "CTile.h"
+class CGround : public CTile
 {
 private:
-	
+	CTile* m_Ground;
 public:
 	CGround();
 	virtual ~CGround();
 
 	virtual void Start();
-	virtual CGround* Clone();
 	virtual void OnCollisionEnter(CCollider* _pOther);
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionExit(CCollider* _pOther);
-	virtual void update();
+
 
 };
 

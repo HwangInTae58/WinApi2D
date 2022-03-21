@@ -131,6 +131,7 @@ enum class TYPE_EVENT
 #define KeyUp(key)		CKeyManager::getInst()->GetButtonUP(key)
 #define KeyDown(key)	CKeyManager::getInst()->GetButtonDOWN(key)
 
+
 #define MousePos()		CKeyManager::getInst()->GetMousePos()
 
 #define CreateObj(pObj, group)	CEventManager::getInst()->EventCreateObject(pObj, group)

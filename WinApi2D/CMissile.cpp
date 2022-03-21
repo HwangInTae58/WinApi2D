@@ -35,7 +35,6 @@ void CMissile::update()
 {
 	
 	fPoint pos = GetPos();
-
 	pos.x += m_fSpeed * m_fvDir.x * fDT;
 	pos.y += m_fSpeed * m_fvDir.y * fDT;
 
@@ -62,8 +61,14 @@ void CMissile::update_move()
 
 void CMissile::update_animation()
 {
-
-	GetAnimator()->Play(L"Rmissile1");
+	if (m_bIsLeft == false)
+	{
+		GetAnimator()->Play(L"Rmissile1");
+	}
+	else
+	{
+		GetAnimator()->Play(L"Lmissile1");
+	}
 }
 
 

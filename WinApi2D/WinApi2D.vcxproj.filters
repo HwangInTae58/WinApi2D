@@ -85,7 +85,7 @@
     <Filter Include="Object\Ground">
       <UniqueIdentifier>{80ec21ed-3a2b-410a-b34a-911928b7c8aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Gravity">
+    <Filter Include="Engine\Component\Gravity">
       <UniqueIdentifier>{7419bbc1-f18f-4131-b211-cbae32737599}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -225,11 +225,11 @@
     <ClInclude Include="CGround.h">
       <Filter>Object\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="CGravity.h">
-      <Filter>Object\Gravity</Filter>
-    </ClInclude>
     <ClInclude Include="CMissile.h">
       <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CGravity.h">
+      <Filter>Engine\Component\Gravity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -350,11 +350,11 @@
     <ClCompile Include="CGround.cpp">
       <Filter>Object\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="CGravity.cpp">
-      <Filter>Object\Gravity</Filter>
-    </ClCompile>
     <ClCompile Include="CMissile.cpp">
       <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CGravity.cpp">
+      <Filter>Engine\Component\Gravity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

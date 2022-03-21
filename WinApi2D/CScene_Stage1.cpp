@@ -3,6 +3,7 @@
 #include "CGameObject.h"
 #include "CupHead.h"
 #include "CMap.h"
+#include "CGround.h"
 #include "CBackGround.h"
 CScene_Stage1::CScene_Stage1()
 {
@@ -38,13 +39,16 @@ void CScene_Stage1::Enter()
 	map->Load(L"Map_Start", L"texture\\map\\Stage1.png");
 	AddObject(map, GROUP_GAMEOBJ::MAP);
 
+	//TODO : 질문!!! 이거 그룹까지 정했는데 왜 바닥생성 안되는건지 알려주실수 있나요,,,,
+	CGround* pGround = new CGround;
+	pGround->SetGroup(GROUP_TILE::GROUND);
+	pGround->SetName(L"Ground");
+
 	//백그라운드 추가
 	CBackGround* backGround = new CBackGround;
 	backGround->Load(L"BackGround_Start", L"texture\\background\\background.png");
 	backGround->SetPos(fPoint(-100.f, -500.f));
 	AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
-
-
 
 	//충돌
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);

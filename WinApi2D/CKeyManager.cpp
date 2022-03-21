@@ -77,9 +77,14 @@ bool CKeyManager::GetButtonDOWN(const int key)
 
 bool CKeyManager::PreButton(const int key)
 {
-	
 	return (m_arrPrevKey[key]);
 }
+
+bool CKeyManager::CurButton(const int key)
+{
+	return m_arrCurKey[key];
+}
+
 
 fPoint CKeyManager::GetMousePos()
 {

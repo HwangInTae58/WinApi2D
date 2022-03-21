@@ -12,15 +12,17 @@ CupHead::CupHead()
 	m_Intro = CResourceManager::getInst()->LoadD2DImage(L"Intro", L"texture\\Animation\\Intro\\Intro.png");
 	m_Idle = CResourceManager::getInst()->LoadD2DImage(L"Idle", L"texture\\Animation\\Idle_Aim\\Stay.png");
 	m_run = CResourceManager::getInst()->LoadD2DImage(L"Run", L"texture\\Animation\\Run\\Run.png");
-	m_shoot = CResourceManager::getInst()->LoadD2DImage(L"Run", L"texture\\Animation\\Shoot\\Shoot.png");
+	m_shoot = CResourceManager::getInst()->LoadD2DImage(L"Shoot", L"texture\\Animation\\Shoot\\Shoot.png");
+	m_duck = CResourceManager::getInst()->LoadD2DImage(L"Duck", L"texture\\Animation\\Duck\\Duck.png");
+	m_jump = CResourceManager::getInst()->LoadD2DImage(L"Jump", L"texture\\Animation\\Jump\\Jump.png");
 	SetName(L"Player");
 	//위치 크기 지정
-	SetPos(fPoint(100.f,600.f));
+	SetPos(fPoint(100.f,595.f));
 	SetScale(fPoint(70.f, 100.f));
-
+	
 	//충돌체
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(30.f, 55.f));
+	GetCollider()->SetScale(fPoint(30.f, 65.f));
 	GetCollider()->SetOffsetPos(fPoint(0.f, 10.f));
 
 	//애니메이션 생성
@@ -40,6 +42,9 @@ CupHead::CupHead()
 	GetAnimator()->CreateAnimation(L"LUD", m_Idle, fPoint(0.f, 400.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"RDD", m_Idle, fPoint(0.f, 500.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, false/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"LDD", m_Idle, fPoint(0.f, 500.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*좌우 반전*/);
+	//엎드리기
+	GetAnimator()->CreateAnimation(L"RDU", m_duck, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.07f, 13, false/*좌우 반전*/);
+	GetAnimator()->CreateAnimation(L"LDU", m_duck, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.07f, 13, true/*좌우 반전*/);
 	//달리기
 	GetAnimator()->CreateAnimation(L"LRun", m_run, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, true/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"RRun", m_run, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, false/*좌우 반전*/);
@@ -54,7 +59,11 @@ CupHead::CupHead()
 	GetAnimator()->CreateAnimation(L"LDUS", m_shoot, fPoint(0.f, 300.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 3, true/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"RDDS", m_shoot, fPoint(0.f, 400.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 3, false/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"LDDS", m_shoot, fPoint(0.f, 400.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 3, true/*좌우 반전*/);
+	//점프
+	GetAnimator()->CreateAnimation(L"RJM", m_jump, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.1f, 8, false/*좌우 반전*/);
+	GetAnimator()->CreateAnimation(L"LJM", m_jump, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.1f, 8, true/*좌우 반전*/);
 
+	CreateGravity();
 	GetAnimator()->Play(L"RNone");
 }
 
@@ -70,24 +79,33 @@ CupHead* CupHead::Clone()
 void CupHead::update()
 {
 	fPoint pos = GetPos();
+	
 	update_move();
 	update_animation();
-	
+
 	GetAnimator()->update();
+	
 }
 
 void CupHead::render()
 {
 	component_render();
 }
-void CupHead::Jump()
+void CupHead::Jump(float fDTime)
 {
+	fPoint pos = GetPos();
+	fDTime = fDT;
+	pos.y = 50.f * fDTime;
 	
-
 }
 
 void CupHead::OnCollision(CCollider* _pOther)
 {
+}
+
+void CupHead::OnCollisionEnter(CCollider* _pOther)
+{
+	GROUP_TILE::GROUND;
 	CGameObject* pOtherObj = _pOther->GetObj();
 	if (L"Ground" == pOtherObj->GetName())
 	{
@@ -100,32 +118,41 @@ void CupHead::OnCollision(CCollider* _pOther)
 	}
 }
 
+void CupHead::OnCollisionExit(CCollider* _pOther)
+{
+}
+
 void CupHead::CreateMissile()
 {
 	fPoint fpMissilePos = GetPos();
-	fpMissilePos.x += GetScale().x / 2.f;
+	
 
 	// Misiile Object
 	CMissile* pMissile = new CMissile;
 	pMissile->SetPos(fpMissilePos);
-	if (m_bIs == 2)
+	if (m_bIsLeft == false)
 	{
 		pMissile->SetDir(fVec2(1, 0));
+		fpMissilePos.x += GetScale().x / 2.f;
 	}
-	else if (m_bIs == 1)
+	else if (m_bIsLeft == true)
 	{
 		pMissile->SetDir(fVec2(-1, 0));
+		fpMissilePos.x += GetScale().x / -2.f;
 	}
+	else if (m_bIsUP == true)
+	{
+		pMissile->SetDir(fVec2(0,-1));
+	}
+	else if (m_bIsUP == false)
+	{
+		pMissile->SetDir(fVec2(0, 1));
+	}
+
 	pMissile->SetName(L"Missile");
 	CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
 }
 
-void CupHead::CreateGravity()
-{
-	CGravity* pGravity = new CGravity;
-	pGravity->SetName(L"Gravity");
-	CreateObj(pGravity, GROUP_GAMEOBJ::GRAVITY);
-}
 	
 void CupHead::update_move()
 {
@@ -138,7 +165,12 @@ void CupHead::update_move()
 		PLAYER_MOVE::RUN;
 		pos.x -= m_fSpeed * fDT;
 		m_fVelocity = m_fSpeed;
-		m_bIs = 1;
+		m_bIsLeft = true;
+	}
+	else if (Key('C') || Key(VK_LEFT))
+	{
+		PLAYER_MOVE::IDLE;
+
 	}
 
 	if (Key(VK_RIGHT))
@@ -146,26 +178,29 @@ void CupHead::update_move()
 		PLAYER_MOVE::RUN;
 		pos.x += m_fSpeed * fDT;
 		m_fVelocity = m_fSpeed;
-		m_bIs = 2;
-	}
-	if (Key(VK_DOWN))
-	{
-		PLAYER_MOVE::RUN;
-		pos.y += m_fSpeed * fDT;
-		m_fVelocity = m_fSpeed;
-		m_bIs = 2;
+		m_bIsLeft = false;
 	}
 	if (Key(VK_UP))
 	{
-		PLAYER_MOVE::RUN;
-		pos.y -= m_fSpeed * fDT;
-		m_fVelocity = m_fSpeed;
-		m_bIs = 2;
+		PLAYER_MOVE::IDLE;
+
+		m_bIsUP = true;
 	}
+	if (Key(VK_DOWN))
+	{
+		PLAYER_MOVE::DOCK;
+		pos.y += m_fSpeed * fDT;
+		m_fVelocity = m_fSpeed;
+		m_bIsUP = false;
+		
+	}
+
 	if (KeyDown('Z'))
 	{
+
 		PLAYER_MOVE::JUMP;
-		pos.y -= m_fSpeed;
+		JumpKeyDown = true;
+		Jump(fDT);
 		
 	}
 	if (KeyDown('X'))
@@ -178,28 +213,41 @@ void CupHead::update_move()
 
 void CupHead::update_animation()
 {
-	if (m_bIs == 1)
+	if (m_bIsLeft == true)
 	{
 		if (m_fVelocity > 0)
 		{
 			GetAnimator()->Play(L"LRun");
+			
 		}
-		else
+		else if (m_fVelocity == 0)
 		{
 			GetAnimator()->Play(L"LNone");
+		
+		}
+		else if (m_bIsUP == true)
+		{
+			GetAnimator()->Play(L"LU");
 		}
 	}
-	else
+	else if(m_bIsLeft == false)
 	{
 		if (m_fVelocity > 0)
 		{
 			GetAnimator()->Play(L"RRun");
 		}
-		else
+		else if(m_fVelocity == 0)
 		{
 			GetAnimator()->Play(L"RNone");
 		}
+		else if (m_bIsUP == false)
+		{
+
+			GetAnimator()->Play(L"RDU");
+		}
 	}
+	
+	
 
 }
 

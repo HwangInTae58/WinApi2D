@@ -7,11 +7,12 @@
 
 CGameObject::CGameObject()
 {
+	//ÃÊ±âÈ­
 	m_fptPos = {};
 	m_fptScale = {};
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
-
+	m_pGravity = nullptr;
 	m_bAlive = true;
 	
 }
@@ -23,6 +24,7 @@ CGameObject::CGameObject(const CGameObject& other)
 	m_fptScale	= other.m_fptScale;
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
+	m_pGravity = nullptr;
 
 	m_bAlive	= true;
 
@@ -37,7 +39,11 @@ CGameObject::CGameObject(const CGameObject& other)
 		m_pAnimator = new CAnimator(*other.m_pAnimator);
 		m_pAnimator->m_pOwner = this;
 	}
-
+	if (nullptr != other.m_pGravity)
+	{
+		m_pGravity = new CGravity(*other.m_pGravity);
+		m_pGravity->m_pOwner = this;
+	}
 }
 
 CGameObject::~CGameObject()
@@ -50,7 +56,10 @@ CGameObject::~CGameObject()
 	{
 		delete m_pAnimator;
 	}
-
+	if (nullptr != m_pGravity)
+	{
+		delete m_pGravity;
+	}
 }
 
 void CGameObject::SetPos(fPoint pos)
@@ -88,10 +97,6 @@ bool CGameObject::isDead()
 	return !m_bAlive;
 }
 
-void CGameObject::start()
-{
-}
-
 void CGameObject::SetDead()
 {
 	m_bAlive = false;
@@ -103,7 +108,10 @@ void CGameObject::finalupdate()
 	{
 		m_pCollider->finalupdate();
 	}
-
+	if (nullptr != m_pGravity)
+	{
+		m_pGravity->finalupdate();
+	}
 }
 
 void CGameObject::render()
@@ -149,8 +157,19 @@ CAnimator* CGameObject::GetAnimator()
 	return m_pAnimator;
 }
 
+CGravity* CGameObject::GetGravity()
+{
+	return m_pGravity;
+}
+
 void CGameObject::CreateAnimator()
 {
 	m_pAnimator = new CAnimator;
 	m_pAnimator->m_pOwner = this;
+}
+
+void CGameObject::CreateGravity()
+{
+	m_pGravity = new CGravity;
+	m_pGravity->m_pOwner = this;
 }

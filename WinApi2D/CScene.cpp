@@ -48,7 +48,7 @@ void CScene::finalupdate()
 
 void CScene::start()
 {
-    for (UINT i = 0; i < (UINT)GROUP_TILE::SIZE; i++)
+    for (UINT i = 0; i < (UINT)GROUP_GAMEOBJ::SIZE; i++)
     {
         for (size_t j = 0; j < m_arrObj[i].size(); j++)
         {

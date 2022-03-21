@@ -19,6 +19,7 @@ public:
 	bool GetButtonUP(const int key);		// 키가 올라간 순간 true
 	bool GetButtonDOWN(const int key);		// 키가 내려간 순간 true
 	bool PreButton(const int key);
+	bool CurButton(const int key);
 	fPoint GetMousePos();					// 마우스 좌표 얻기
 };
 
