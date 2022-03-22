@@ -82,9 +82,6 @@
     <Filter Include="Object\Player">
       <UniqueIdentifier>{273cf50d-717e-4945-9b40-2e6ffb4c1e1c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Ground">
-      <UniqueIdentifier>{80ec21ed-3a2b-410a-b34a-911928b7c8aa}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -219,9 +216,6 @@
     <ClInclude Include="CupHead.h">
       <Filter>Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="CGround.h">
-      <Filter>Object\Ground</Filter>
-    </ClInclude>
     <ClInclude Include="CMissile.h">
       <Filter>Object\Player</Filter>
     </ClInclude>
@@ -340,9 +334,6 @@
     </ClCompile>
     <ClCompile Include="CupHead.cpp">
       <Filter>Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CGround.cpp">
-      <Filter>Object\Ground</Filter>
     </ClCompile>
     <ClCompile Include="CMissile.cpp">
       <Filter>Object\Player</Filter>

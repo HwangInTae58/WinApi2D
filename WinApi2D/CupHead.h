@@ -30,8 +30,8 @@ private:
 	CD2DImage* m_jump;
 	float m_fSpeed = 300;
 	float m_fVelocity;
-	bool m_bIsLeft;	// true = Left
-	bool m_bIsUP;	// true = UP
+	int m_bIs;	//  0  idle 1 Right 2 Left 3 UP 4 Down
+	
 	bool m_blsFloor;
 
 	//점프 함수

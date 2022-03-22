@@ -61,7 +61,7 @@ void CMissile::update_move()
 
 void CMissile::update_animation()
 {
-	if (m_bIsLeft == false)
+	if (m_fvDir.x == 1)
 	{
 		GetAnimator()->Play(L"Rmissile1");
 	}

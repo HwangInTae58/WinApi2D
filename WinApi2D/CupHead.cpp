@@ -2,14 +2,15 @@
 #include "CupHead.h"
 #include "CMissile.h"
 #include "CCollider.h"
+#include "CTile.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
 
 CupHead::CupHead()
 {
-	m_bIsLeft = false;
+	m_bIs = 0;
 	m_blsFloor = false;
-
+	m_fVelocity = 0;
 
 	//사진 불러오기
 	m_Intro = CResourceManager::getInst()->LoadD2DImage(L"Intro", L"texture\\Animation\\Intro\\Intro.png");
@@ -103,26 +104,31 @@ void CupHead::Jump(float fDTime)
 
 void CupHead::OnCollision(CCollider* _pOther)
 {
+	fPoint pos = GetPos();
+	fPoint scale = GetScale();
+	CGameObject* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Ground")
+	{
+		fPoint pObjPos = _pOther->GetFinalPos();
+		fPoint pObjScale = _pOther->GetScale();
+
+
+	}
 }
 
 void CupHead::OnCollisionEnter(CCollider* _pOther)
 {
-	GROUP_TILE::GROUND;
+	
 	CGameObject* pOtherObj = _pOther->GetObj();
-	if (L"Ground" == pOtherObj->GetName())
+	if (pOtherObj->GetName() == L"Ground")
 	{
-		fPoint Pos = GetPos();
-		if (Pos.y < pOtherObj->GetPos().y)
-		{
-			Pos.y = pOtherObj->GetPos().y;
-			PLAYER_MOVE::IDLE;
-		}
-		m_blsFloor = true;
+
 	}
 }
 
 void CupHead::OnCollisionExit(CCollider* _pOther)
 {
+	m_blsFloor = true;
 }
 
 void CupHead::CreateMissile()
@@ -133,21 +139,21 @@ void CupHead::CreateMissile()
 	// Misiile Object
 	CMissile* pMissile = new CMissile;
 	pMissile->SetPos(fpMissilePos);
-	if (m_bIsLeft == false)
+	if (m_bIs == 1)
 	{
 		pMissile->SetDir(fVec2(1, 0));
 		fpMissilePos.x += GetScale().x / 2.f;
 	}
-	else if (m_bIsLeft == true)
+	else if (m_bIs == 2)
 	{
 		pMissile->SetDir(fVec2(-1, 0));
 		fpMissilePos.x += GetScale().x / -2.f;
 	}
-	else if (m_bIsUP == true)
+	else if (m_bIs == 3)
 	{
 		pMissile->SetDir(fVec2(0,-1));
 	}
-	else if (m_bIsUP == false)
+	else if (m_bIs == 4)
 	{
 		pMissile->SetDir(fVec2(0, 1));
 	}
@@ -160,11 +166,11 @@ void CupHead::CreateMissile()
 void CupHead::update_move()
 {
 	fPoint pos = GetPos();
-	if (m_blsFloor == false)
+	/*if (m_blsFloor == false)
 	{
-		m_fDir.y -= 700.f * fDT;
+		m_fDir.y -= JUMP_FOCE * fDT;
 		pos.y += -m_fDir.y * fDT;
-	}
+	}*/
 	
 
 	if (Key(VK_LEFT))
@@ -172,33 +178,30 @@ void CupHead::update_move()
 		PLAYER_MOVE::RUN;
 		pos.x -= m_fSpeed * fDT;
 		m_fVelocity = m_fSpeed;
-		m_bIsLeft = true;
+		m_bIs = 2;
 	}
-	else if (Key('C') || Key(VK_LEFT))
-	{
-		PLAYER_MOVE::IDLE;
 
-	}
+	
 
 	if (Key(VK_RIGHT))
 	{
 		PLAYER_MOVE::RUN;
 		pos.x += m_fSpeed * fDT;
 		m_fVelocity = m_fSpeed;
-		m_bIsLeft = false;
+		m_bIs = 1;
 	}
 	if (Key(VK_UP))
 	{
 		PLAYER_MOVE::IDLE;
 
-		m_bIsUP = true;
+		m_bIs = 3;
 	}
 	if (Key(VK_DOWN))
 	{
 		PLAYER_MOVE::DOCK;
 		pos.y += m_fSpeed * fDT;
 		m_fVelocity = m_fSpeed;
-		m_bIsUP = false;
+		m_bIs = 4;
 		
 	}
 
@@ -220,38 +223,30 @@ void CupHead::update_move()
 
 void CupHead::update_animation()
 {
-	if (m_bIsLeft == true)
+	if (m_bIs == 2)
 	{
 		if (m_fVelocity > 0)
 		{
 			GetAnimator()->Play(L"LRun");
-			
+
 		}
-		else if (m_fVelocity == 0)
+		else
 		{
 			GetAnimator()->Play(L"LNone");
-		
 		}
-		else if (m_bIsUP == true)
-		{
-			GetAnimator()->Play(L"LU");
-		}
+	
 	}
-	else if(m_bIsLeft == false)
+	else if(m_bIs == 1)
 	{
 		if (m_fVelocity > 0)
 		{
 			GetAnimator()->Play(L"RRun");
 		}
-		else if(m_fVelocity == 0)
+		else
 		{
 			GetAnimator()->Play(L"RNone");
 		}
-		else if (m_bIsUP == false)
-		{
-
-			GetAnimator()->Play(L"RDU");
-		}
+	
 	}
 	
 	
