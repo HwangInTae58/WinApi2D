@@ -11,6 +11,7 @@ CupHead::CupHead()
 	m_bIs = 0;
 	m_blsFloor = false;
 	m_fVelocity = 0;
+	m_Hight = 0;
 
 	//사진 불러오기
 	m_Intro = CResourceManager::getInst()->LoadD2DImage(L"Intro", L"texture\\Animation\\Intro\\Intro.png");
@@ -21,7 +22,7 @@ CupHead::CupHead()
 	m_jump = CResourceManager::getInst()->LoadD2DImage(L"Jump", L"texture\\Animation\\Jump\\Jump.png");
 	SetName(L"Player");
 	//위치 크기 지정
-	SetPos(fPoint(100.f,595.f));
+	SetPos(fPoint(100.f,405.f));
 	SetScale(fPoint(70.f, 100.f));
 	
 	//충돌체
@@ -94,41 +95,80 @@ void CupHead::render()
 {
 	component_render();
 }
-void CupHead::Jump(float fDTime)
+void CupHead::Jump()
 {
 	fPoint pos = GetPos();
-	fDTime = fDT;
-	pos.y = 50.f * fDTime;
-	
+	m_Hight = JUMP_FOCE;
+	if (JumpKeyDown == false)
+	{
+		return;
+	}
+	else
+	{
+		if(m_Hight < 0)
+		m_Hight = JUMP_FOCE - GRAVITY_ * fDT;
+		pos.y += -m_fDir.y + m_Hight;
+		m_fVelocity += 100;
+		SetPos(pos);
+	}
+	JumpKeyDown = false;
 }
 
 void CupHead::OnCollision(CCollider* _pOther)
 {
-	fPoint pos = GetPos();
-	fPoint scale = GetScale();
-	CGameObject* pOtherObj = _pOther->GetObj();
-	if (pOtherObj->GetName() == L"Ground")
+	if (_pOther->GetObj()->GetName() == L"Tile" && m_iCollCount >= 1)
 	{
-		fPoint pObjPos = _pOther->GetFinalPos();
-		fPoint pObjScale = _pOther->GetScale();
+		CTile* pTile = (CTile*)(_pOther->GetObj());
+		m_blsFloor = true;
+		fPoint fObjPos = pTile->GetCollider()->GetFinalPos();
+		fPoint fObjScale = pTile->GetCollider()->GetScale();
+		
+		fPoint pos = GetCollider()->GetFinalPos();
+		fPoint scale = GetCollider()->GetScale();
 
+		float fLen = abs(pos.y - fObjPos.y);
+		float fValue = (scale.y / 2.f + fObjScale.y / 2.f) - fLen;
 
+		fObjPos = GetPos();
+		fObjPos.y -= fValue;
+		SetPos(fObjPos);
+		
 	}
 }
 
 void CupHead::OnCollisionEnter(CCollider* _pOther)
 {
+	m_iCollCount++;
 	
-	CGameObject* pOtherObj = _pOther->GetObj();
-	if (pOtherObj->GetName() == L"Ground")
+	if (_pOther->GetObj()->GetName() == L"Tile" && m_iCollCount >= 1)
 	{
+		CTile* pTile = (CTile*)(_pOther->GetObj());
+		m_blsFloor = true;
+		fPoint fObjPos = pTile->GetCollider()->GetFinalPos();
+		fPoint fObjScale = pTile->GetCollider()->GetScale();
+
+		fPoint pos = GetCollider()->GetFinalPos();
+		fPoint scale = GetCollider()->GetScale();
+
+		float fLen = abs(pos.y - fObjPos.y);
+		float fValue = (scale.y / 2.f + fObjScale.y / 2.f) - fLen;
+
+		fObjPos = GetPos();
+		fObjPos.y -= fValue;
+		SetPos(fObjPos);
 
 	}
 }
 
 void CupHead::OnCollisionExit(CCollider* _pOther)
 {
-	m_blsFloor = true;
+	m_iCollCount--;
+	
+	if (_pOther->GetObj()->GetName() == L"Tile" && m_iCollCount == 0)
+	{
+		CTile* pTile = (CTile*)(_pOther->GetObj());
+		m_blsFloor = false;
+	}
 }
 
 void CupHead::CreateMissile()
@@ -151,7 +191,7 @@ void CupHead::CreateMissile()
 	}
 	else if (m_bIs == 3)
 	{
-		pMissile->SetDir(fVec2(0,-1));
+		pMissile->SetDir(fVec2(0, -1));
 	}
 	else if (m_bIs == 4)
 	{
@@ -166,12 +206,11 @@ void CupHead::CreateMissile()
 void CupHead::update_move()
 {
 	fPoint pos = GetPos();
-	/*if (m_blsFloor == false)
+	if (m_blsFloor == false)
 	{
 		m_fDir.y -= JUMP_FOCE * fDT;
 		pos.y += -m_fDir.y * fDT;
-	}*/
-	
+	}
 
 	if (Key(VK_LEFT))
 	{
@@ -180,9 +219,6 @@ void CupHead::update_move()
 		m_fVelocity = m_fSpeed;
 		m_bIs = 2;
 	}
-
-	
-
 	if (Key(VK_RIGHT))
 	{
 		PLAYER_MOVE::RUN;
@@ -193,7 +229,8 @@ void CupHead::update_move()
 	if (Key(VK_UP))
 	{
 		PLAYER_MOVE::IDLE;
-
+		pos.y -= m_fSpeed * fDT;
+		m_fVelocity = m_fSpeed;
 		m_bIs = 3;
 	}
 	if (Key(VK_DOWN))
@@ -210,7 +247,7 @@ void CupHead::update_move()
 
 		PLAYER_MOVE::JUMP;
 		JumpKeyDown = true;
-		Jump(fDT);
+		Jump();
 		
 	}
 	if (KeyDown('X'))

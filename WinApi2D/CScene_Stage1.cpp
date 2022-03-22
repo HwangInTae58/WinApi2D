@@ -29,7 +29,14 @@ void CScene_Stage1::Enter()
 	wstring path = CPathManager::getInst()->GetContentPath();
 	path += L"tile\\Stage1";
 	LoadTile(path);
+
+	/*CTile* tile = new CTile;
+	tile->SetGroup(GROUP_TILE::GROUND);
+	tile->SetName(L"Ground");
+	tile->GetCollider();*/
 	
+	
+
 	// Player 추가
 	CGameObject* pPlayer = new CupHead;
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
@@ -38,17 +45,6 @@ void CScene_Stage1::Enter()
 	CMap* map = new CMap;
 	map->Load(L"Map_Start", L"texture\\map\\Stage1.png");
 	AddObject(map, GROUP_GAMEOBJ::MAP);
-
-	//Ground 추가
-	/*CGround* pGround = new CGround;
-	pGround->SetGroup(GROUP_TILE::GROUND);
-	pGround->SetName(L"Ground");*/
-
-	CTile* tile = new CTile;
-	tile->SetGroup(GROUP_TILE::GROUND);
-	tile->SetName(L"Ground");
-	tile->GetCollider();
-
 
 	//백그라운드 추가
 	CBackGround* backGround = new CBackGround;
@@ -61,7 +57,6 @@ void CScene_Stage1::Enter()
 	
 	// Camera Look 지정
 	CCameraManager::getInst()->SetLookAt(fPoint(680.f,360.f));
-	
 	CCameraManager::getInst()->FadeIn(1.f);
 
 
