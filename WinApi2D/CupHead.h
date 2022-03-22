@@ -30,14 +30,14 @@ private:
 	CD2DImage* m_jump;
 	float m_fSpeed = 300;
 	float m_fVelocity;
+	bool m_bIsLeft;	// true = Left
+	bool m_bIsUP;	// true = UP
+	bool m_blsFloor;
 
 	//점프 함수
 	fPoint m_fDir;
 	bool JumpKeyDown = false;
-	bool m_bIsLeft;	// true = Left
-	bool m_bIsUP;	// true = UP
-	float m_JumpPower;
-	float m_fz;
+	
 
 public:
 	CupHead();

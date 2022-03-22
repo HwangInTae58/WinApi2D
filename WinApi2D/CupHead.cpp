@@ -2,12 +2,15 @@
 #include "CupHead.h"
 #include "CMissile.h"
 #include "CCollider.h"
-#include "CGravity.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
 
 CupHead::CupHead()
 {
+	m_bIsLeft = false;
+	m_blsFloor = false;
+
+
 	//사진 불러오기
 	m_Intro = CResourceManager::getInst()->LoadD2DImage(L"Intro", L"texture\\Animation\\Intro\\Intro.png");
 	m_Idle = CResourceManager::getInst()->LoadD2DImage(L"Idle", L"texture\\Animation\\Idle_Aim\\Stay.png");
@@ -63,7 +66,6 @@ CupHead::CupHead()
 	GetAnimator()->CreateAnimation(L"RJM", m_jump, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.1f, 8, false/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"LJM", m_jump, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.1f, 8, true/*좌우 반전*/);
 
-	CreateGravity();
 	GetAnimator()->Play(L"RNone");
 }
 
@@ -115,6 +117,7 @@ void CupHead::OnCollisionEnter(CCollider* _pOther)
 			Pos.y = pOtherObj->GetPos().y;
 			PLAYER_MOVE::IDLE;
 		}
+		m_blsFloor = true;
 	}
 }
 
@@ -157,8 +160,12 @@ void CupHead::CreateMissile()
 void CupHead::update_move()
 {
 	fPoint pos = GetPos();
-
-	m_fVelocity = 0.f;
+	if (m_blsFloor == false)
+	{
+		m_fDir.y -= 700.f * fDT;
+		pos.y += -m_fDir.y * fDT;
+	}
+	
 
 	if (Key(VK_LEFT))
 	{

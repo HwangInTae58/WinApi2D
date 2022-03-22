@@ -2,7 +2,7 @@
 
 class CCollider;
 class CAnimator;
-class CGravity;
+
 
 
 class CGameObject
@@ -13,15 +13,14 @@ private:
 	wstring m_strName;
 	fPoint m_fptPos;
 	fPoint m_fptScale;
+
+
 	// Component
 	CCollider* m_pCollider;
 	CAnimator* m_pAnimator;
-	CGravity* m_pGravity;
-
 
 	bool m_bAlive;
 	void SetDead();
-	float m_fGrabity = 9.8f;
 public:
 	CGameObject();
 	CGameObject(const CGameObject& other);
@@ -55,10 +54,10 @@ public:
 
 	CCollider* GetCollider();				// 충돌체 반환
 	CAnimator* GetAnimator();				// 애니메이터 반환
-	CGravity* GetGravity();					//중력 반환
+
 
 	void CreateCollider();					// 충돌체 생성
 	void CreateAnimator();					// 애니메이터 생성
-	void CreateGravity();					//중력생성
+	
 };
 
