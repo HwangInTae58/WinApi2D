@@ -3,17 +3,21 @@
 #include "CMissile.h"
 #include "CCollider.h"
 #include "CTile.h"
-#include "CGround.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
 
 CupHead::CupHead()
 {
-	m_bIs = 0;
-	m_blsFloor = false;
+	m_eCurState = PLAYER_STATE::IDLE;
+	m_ePreState = PLAYER_STATE::INTRO;
+	m_iCurDir = 1;
+	m_iPreDir = 1;
+	m_blsFloor = GetFloor();
+	m_iCollCount = 0;
 	m_fVelocity = 0;
 	m_Hight = 0;
-
+	m_isGravity = GetGravity();
+	m_isGravity = true;
 	//사진 불러오기
 	m_Intro = CResourceManager::getInst()->LoadD2DImage(L"Intro", L"texture\\Animation\\Intro\\Intro.png");
 	m_Idle = CResourceManager::getInst()->LoadD2DImage(L"Idle", L"texture\\Animation\\Idle_Aim\\Stay.png");
@@ -83,13 +87,11 @@ CupHead* CupHead::Clone()
 
 void CupHead::update()
 {
-	fPoint pos = GetPos();
-	
+	SetGravity(true);
 	update_move();
 	update_animation();
-
 	GetAnimator()->update();
-	
+	m_ePreState = m_eCurState;
 }
 
 void CupHead::render()
@@ -100,56 +102,34 @@ void CupHead::render()
 
 void CupHead::OnCollision(CCollider* _pOther)
 {
-	if (_pOther->GetObj()->GetName() == L"Tile" && m_iCollCount >= 1)
+	if (_pOther->GetObj()->GetName() == L"Tile" && m_iCollCount > 0 )
 	{
-		CTile* pTile = (CTile*)(_pOther->GetObj());
+		m_isGravity = false;
+		m_Gravity = 0.f;
 		m_blsFloor = true;
-		fPoint fObjPos = pTile->GetCollider()->GetFinalPos();
-		fPoint fObjScale = pTile->GetCollider()->GetScale();
-		
-		fPoint pos = GetCollider()->GetFinalPos();
-		fPoint scale = GetCollider()->GetScale();
-
-		float fLen = abs(pos.y - fObjPos.y);
-		float fValue = (scale.y / 2.f + fObjScale.y / 2.f) - fLen;
-
-		fObjPos = GetPos();
-		fObjPos.y -= fValue;
-		SetPos(fObjPos);
-		
 	}
-	
 }
 
 void CupHead::OnCollisionEnter(CCollider* _pOther)
 {
 	m_iCollCount++;
-	if (_pOther->GetObj()->GetName() == L"Tile" && m_iCollCount >= 1)
-	{
-		CTile* pTile = (CTile*)(_pOther->GetObj());
+	
+	if (_pOther->GetObj()->GetName() == L"Tile")
+	{	
+		m_isGravity = false;
+		m_Gravity = 0.f;
 		m_blsFloor = true;
-		fPoint fObjPos = pTile->GetCollider()->GetFinalPos();
-		fPoint fObjScale = pTile->GetCollider()->GetScale();
-
-		fPoint pos = GetCollider()->GetFinalPos();
-		fPoint scale = GetCollider()->GetScale();
-
-		float fLen = abs(pos.y - fObjPos.y);
-		float fValue = (scale.y / 2.f + fObjScale.y / 2.f) - fLen;
-
-		fObjPos = GetPos();
-		fObjPos.y -= fValue;
-		SetPos(fObjPos);
+		JumpKeyDown = false;
 	}
 }
 
 void CupHead::OnCollisionExit(CCollider* _pOther)
 {
 	m_iCollCount--;
-	
-	if (_pOther->GetObj()->GetName() == L"Tile" && m_iCollCount == 0)
+	if (_pOther->GetObj()->GetName() == L"Tile" && m_iCollCount <= 0)
 	{
-		CTile* pTile = (CTile*)(_pOther->GetObj());
+		m_isGravity = true;
+		m_Gravity = 700;
 		m_blsFloor = false;
 	}
 }
@@ -157,139 +137,142 @@ void CupHead::OnCollisionExit(CCollider* _pOther)
 void CupHead::CreateMissile()
 {
 	fPoint fpMissilePos = GetPos();
-	
+
 
 	// Misiile Object
 	CMissile* pMissile = new CMissile;
 	pMissile->SetPos(fpMissilePos);
-	if (m_bIs <= 1)
+	if (m_iCurDir == 1)
 	{
 		pMissile->SetDir(fVec2(1, 0));
 		fpMissilePos.x += GetScale().x / 2.f;
 	}
-	else if (m_bIs == 2)
+	else if (m_iCurDir == -1)
 	{
 		pMissile->SetDir(fVec2(-1, 0));
 		fpMissilePos.x += GetScale().x / -2.f;
 	}
-	else if (m_bIs == 3)
-	{
-		pMissile->SetDir(fVec2(0, -1));
-		fpMissilePos.x += GetScale().x / 2.f;
-	}
-	else if (m_bIs == 4)
-	{
-		pMissile->SetDir(fVec2(0, 1));
-		fpMissilePos.x += GetScale().x / 2.f;
-	}
-	else if (m_bIs == 4 && m_bIs == 1)
-	{
-		pMissile->SetDir(fVec2(1, 1));
-		fpMissilePos.x += GetScale().x / 2.f;
-	}
-	else if (m_bIs == 4 && m_bIs == 2)
-	{
-		pMissile->SetDir(fVec2(-1, 1));
-		fpMissilePos.x += GetScale().x / 2.f;
-	}
-
 	pMissile->SetName(L"Missile");
 	CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
 }
 
-	
 void CupHead::update_move()
 {
 	fPoint pos = GetPos();
-	if (m_blsFloor == false)
+	
+	if (m_isGravity == true)
 	{
-		m_fDir.y -= JUMP_FOCE * fDT;
+		m_fDir.y -= m_Gravity * fDT;
 		pos.y += -m_fDir.y * fDT;
 	}
-
 	if (Key(VK_LEFT))
 	{
-		PLAYER_MOVE::RUN;
-		pos.x -= m_fSpeed * fDT;
-		m_fVelocity = m_fSpeed;
-		m_bIs = 2;
+		m_iCurDir == -1;
+		m_eCurState = PLAYER_STATE::RUN;
+			pos.x -= m_fSpeed * fDT;
+			m_fVelocity = m_fSpeed;
 	}
 	if (Key(VK_RIGHT))
 	{
-		PLAYER_MOVE::RUN;
-		pos.x += m_fSpeed * fDT;
-		m_fVelocity = m_fSpeed;
-		m_bIs = 1;
+		m_eCurState = PLAYER_STATE::RUN;
+		m_iCurDir == 1;
+			pos.x += m_fSpeed * fDT;
+			m_fVelocity = m_fSpeed;
 	}
 	if (Key(VK_UP))
 	{
-		PLAYER_MOVE::IDLE;
-		pos.y -= m_fSpeed * fDT;
-		m_fVelocity = m_fSpeed;
-		m_bIs = 3;
+			
 	}
 	if (Key(VK_DOWN))
 	{
-		PLAYER_MOVE::DOCK;
-		pos.y += m_fSpeed * fDT;
-		m_fVelocity = m_fSpeed;
-		m_bIs = 4;
-		
 	}
 
-	if (KeyDown('Z' ))
+	if (KeyDown('Z'))
 	{
-		PLAYER_MOVE::JUMP;
+		if(m_blsFloor && !JumpKeyDown){
+		m_eCurState = PLAYER_STATE::JUMP;
 		JumpKeyDown = true;
-		m_fDir.y += JUMP_FOCE;
-		if (m_blsFloor == false)
-		{
-			JumpKeyDown = false;
+		JumpForce = 900.f;
+		pos.y -= JumpForce * fDT;
 		}
+		
 	}
 	if (KeyDown('X'))
 	{
+		m_eCurState = PLAYER_STATE::ATTACK;
 		CreateMissile();
 	}
-
+	if (0.f == m_fVelocity && PLAYER_STATE::JUMP != m_eCurState)
+	{
+		m_eCurState = PLAYER_STATE::IDLE;
+	}
 	SetPos(pos);
 }
 
 void CupHead::update_animation()
 {
-	if (m_bIs == 1)
+	if (m_ePreState == m_eCurState && m_iPreDir == m_iCurDir)
 	{
-		if (m_fVelocity == 0)
-		{
-			GetAnimator()->Play(L"RNone");
-		}
-		else
-		{
-			GetAnimator()->Play(L"RRun");
-		}
+		return;
 	}
-	if (m_bIs == 2)
+	switch (m_eCurState)
 	{
-		if (m_fVelocity == 0)
+	case PLAYER_STATE::INTRO:
+		break;
+	case PLAYER_STATE::IDLE:
+	{
+		if (-1 == m_iCurDir && m_blsFloor && m_fVelocity == 0)
 		{
 			GetAnimator()->Play(L"LNone");
 		}
-		else
+		else if (1 == m_iCurDir && m_blsFloor && m_fVelocity == 0)
+		{
+			GetAnimator()->Play(L"RNone");
+		}
+	}
+	break;
+	case PLAYER_STATE::DOCK:
+	{
+
+	}
+	break;
+	case PLAYER_STATE::RUN:
+	{
+		if (-1 == m_iCurDir && m_blsFloor && m_fVelocity > 0)
 		{
 			GetAnimator()->Play(L"LRun");
 		}
-	}
-	if (JumpKeyDown == true)
-	{
-		if (m_bIs == 1)
+		else if (1 == m_iCurDir && m_blsFloor && m_fVelocity > 0)
 		{
-			GetAnimator()->Play(L"RJM");
+			GetAnimator()->Play(L"RRun");
 		}
-		if (m_bIs == 2 )
+		break;
+	}
+	case PLAYER_STATE::JUMP:
+	{
+		if (-1 == m_iCurDir)
 		{
 			GetAnimator()->Play(L"LJM");
 		}
+		else if (1 == m_iCurDir)
+		{
+			GetAnimator()->Play(L"RJM");
+		}
 	}
+	break;
+	case PLAYER_STATE::ATTACK:
+	{
+
+	}
+	break;
+	case PLAYER_STATE::DEAD:
+	{
+
+	}
+	break;
+	}
+	
+	
 }
 
 

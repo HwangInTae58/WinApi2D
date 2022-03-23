@@ -18,6 +18,10 @@ public:
 	virtual int GetY();
 	virtual void SetGroup(GROUP_TILE group);
 
+	virtual void OnCollision(CCollider* _pOther);			// 재정의용 충돌중 가상함수
+	virtual void OnCollisionEnter(CCollider* _pOther);	// 재정의용 충돌시 가상함수
+	virtual void OnCollisionExit(CCollider* _pOther);	// 재정의용 탈충돌 가상함수
+
 	GROUP_TILE GetGroup();
 };
 

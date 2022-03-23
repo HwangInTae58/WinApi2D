@@ -1,9 +1,8 @@
 #pragma once
 #include "CGameObject.h"
 
-#define JUMP_FOCE 700
-#define GRAVITY_  1500
-enum class PLAYER_MOVE
+
+enum class PLAYER_STATE
 {
 	INTRO,
 	IDLE,
@@ -28,14 +27,24 @@ private:
 	CD2DImage* m_shoot;
 	CD2DImage* m_duck;
 	CD2DImage* m_jump;
+
+	PLAYER_STATE m_eCurState; //캐릭터 현재상태
+	PLAYER_STATE m_ePreState; //캐릭터 이전상태
+
+	int          m_iCurDir;	  //현재방향
+	int          m_iPreDir;	  //이전방향
+
+	float m_Gravity = 700;
 	float m_fSpeed = 300;
-	float m_fVelocity;
-	int m_bIs;	//  0  idle 1 Right 2 Left 3 UP 4 Down
+	float m_fVelocity;  //가속도
 	
+	bool m_isGravity;
 	bool m_blsFloor;
 	int m_iCollCount;
+	
 	//점프 함수
 	fPoint m_fDir;
+	float JumpForce =700;
 	bool JumpKeyDown = false;
 	float m_Hight;
 
@@ -50,9 +59,9 @@ public:
 
 	void CreateMissile();
 
+
 	virtual void update();
 	virtual void render();
-
 
 	void update_move();
 	void update_animation();

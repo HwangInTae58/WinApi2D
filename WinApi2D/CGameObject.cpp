@@ -13,7 +13,6 @@ CGameObject::CGameObject()
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
 	m_bAlive = true;
-	
 }
 
 CGameObject::CGameObject(const CGameObject& other)
@@ -23,7 +22,6 @@ CGameObject::CGameObject(const CGameObject& other)
 	m_fptScale	= other.m_fptScale;
 	m_pCollider = nullptr;
 	m_pAnimator = nullptr;
-
 	m_bAlive	= true;
 
 	if (nullptr != other.m_pCollider)
@@ -127,6 +125,27 @@ void CGameObject::component_render()
 		m_pCollider->render();
 	}
 }
+
+bool CGameObject::GetFloor()
+{
+	return m_blsFloor;
+}
+
+bool CGameObject::SetFloor(bool other)
+{
+	return m_blsFloor = other;
+}
+
+int CGameObject::GetCollCount()
+{
+	return m_iCollCount;
+}
+
+int CGameObject::SetCollCount(int other)
+{
+	return m_iCollCount = other;
+}
+
 
 CCollider* CGameObject::GetCollider()
 {

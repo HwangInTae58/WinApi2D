@@ -4,7 +4,6 @@
 #include "CupHead.h"
 #include "CMap.h"
 #include "CTile.h"
-#include "CGround.h"
 #include "CBackGround.h"
 CScene_Stage1::CScene_Stage1()
 {
@@ -30,13 +29,6 @@ void CScene_Stage1::Enter()
 	wstring path = CPathManager::getInst()->GetContentPath();
 	path += L"tile\\Stage1";
 	LoadTile(path);
-
-	/*CTile* Ground = new CGround;
-	Ground->SetGroup(GROUP_TILE::GROUND);
-	Ground->SetName(L"Ground");
-	Ground->GetCollider();*/
-	
-	
 
 	// Player Ãß°¡
 	CGameObject* pPlayer = new CupHead;
