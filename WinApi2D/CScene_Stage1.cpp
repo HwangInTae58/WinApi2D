@@ -4,6 +4,7 @@
 #include "CupHead.h"
 #include "CMap.h"
 #include "CTile.h"
+#include "CGround.h"
 #include "CBackGround.h"
 CScene_Stage1::CScene_Stage1()
 {
@@ -30,10 +31,10 @@ void CScene_Stage1::Enter()
 	path += L"tile\\Stage1";
 	LoadTile(path);
 
-	/*CTile* tile = new CTile;
-	tile->SetGroup(GROUP_TILE::GROUND);
-	tile->SetName(L"Ground");
-	tile->GetCollider();*/
+	/*CTile* Ground = new CGround;
+	Ground->SetGroup(GROUP_TILE::GROUND);
+	Ground->SetName(L"Ground");
+	Ground->GetCollider();*/
 	
 	
 

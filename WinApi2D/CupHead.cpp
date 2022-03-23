@@ -3,6 +3,7 @@
 #include "CMissile.h"
 #include "CCollider.h"
 #include "CTile.h"
+#include "CGround.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
 
@@ -95,24 +96,7 @@ void CupHead::render()
 {
 	component_render();
 }
-void CupHead::Jump()
-{
-	fPoint pos = GetPos();
-	m_Hight = JUMP_FOCE;
-	if (JumpKeyDown == false)
-	{
-		return;
-	}
-	else
-	{
-		if(m_Hight < 0)
-		m_Hight = JUMP_FOCE - GRAVITY_ * fDT;
-		pos.y += -m_fDir.y + m_Hight;
-		m_fVelocity += 100;
-		SetPos(pos);
-	}
-	JumpKeyDown = false;
-}
+
 
 void CupHead::OnCollision(CCollider* _pOther)
 {
@@ -134,12 +118,12 @@ void CupHead::OnCollision(CCollider* _pOther)
 		SetPos(fObjPos);
 		
 	}
+	
 }
 
 void CupHead::OnCollisionEnter(CCollider* _pOther)
 {
 	m_iCollCount++;
-	
 	if (_pOther->GetObj()->GetName() == L"Tile" && m_iCollCount >= 1)
 	{
 		CTile* pTile = (CTile*)(_pOther->GetObj());
@@ -156,7 +140,6 @@ void CupHead::OnCollisionEnter(CCollider* _pOther)
 		fObjPos = GetPos();
 		fObjPos.y -= fValue;
 		SetPos(fObjPos);
-
 	}
 }
 
@@ -179,7 +162,7 @@ void CupHead::CreateMissile()
 	// Misiile Object
 	CMissile* pMissile = new CMissile;
 	pMissile->SetPos(fpMissilePos);
-	if (m_bIs == 1)
+	if (m_bIs <= 1)
 	{
 		pMissile->SetDir(fVec2(1, 0));
 		fpMissilePos.x += GetScale().x / 2.f;
@@ -192,10 +175,22 @@ void CupHead::CreateMissile()
 	else if (m_bIs == 3)
 	{
 		pMissile->SetDir(fVec2(0, -1));
+		fpMissilePos.x += GetScale().x / 2.f;
 	}
 	else if (m_bIs == 4)
 	{
 		pMissile->SetDir(fVec2(0, 1));
+		fpMissilePos.x += GetScale().x / 2.f;
+	}
+	else if (m_bIs == 4 && m_bIs == 1)
+	{
+		pMissile->SetDir(fVec2(1, 1));
+		fpMissilePos.x += GetScale().x / 2.f;
+	}
+	else if (m_bIs == 4 && m_bIs == 2)
+	{
+		pMissile->SetDir(fVec2(-1, 1));
+		fpMissilePos.x += GetScale().x / 2.f;
 	}
 
 	pMissile->SetName(L"Missile");
@@ -242,13 +237,15 @@ void CupHead::update_move()
 		
 	}
 
-	if (KeyDown('Z'))
+	if (KeyDown('Z' ))
 	{
-
 		PLAYER_MOVE::JUMP;
 		JumpKeyDown = true;
-		Jump();
-		
+		m_fDir.y += JUMP_FOCE;
+		if (m_blsFloor == false)
+		{
+			JumpKeyDown = false;
+		}
 	}
 	if (KeyDown('X'))
 	{
@@ -260,34 +257,39 @@ void CupHead::update_move()
 
 void CupHead::update_animation()
 {
-	if (m_bIs == 2)
+	if (m_bIs == 1)
 	{
-		if (m_fVelocity > 0)
-		{
-			GetAnimator()->Play(L"LRun");
-
-		}
-		else
-		{
-			GetAnimator()->Play(L"LNone");
-		}
-	
-	}
-	else if(m_bIs == 1)
-	{
-		if (m_fVelocity > 0)
-		{
-			GetAnimator()->Play(L"RRun");
-		}
-		else
+		if (m_fVelocity == 0)
 		{
 			GetAnimator()->Play(L"RNone");
 		}
-	
+		else
+		{
+			GetAnimator()->Play(L"RRun");
+		}
 	}
-	
-	
-
+	if (m_bIs == 2)
+	{
+		if (m_fVelocity == 0)
+		{
+			GetAnimator()->Play(L"LNone");
+		}
+		else
+		{
+			GetAnimator()->Play(L"LRun");
+		}
+	}
+	if (JumpKeyDown == true)
+	{
+		if (m_bIs == 1)
+		{
+			GetAnimator()->Play(L"RJM");
+		}
+		if (m_bIs == 2 )
+		{
+			GetAnimator()->Play(L"LJM");
+		}
+	}
 }
 
 

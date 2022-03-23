@@ -82,6 +82,9 @@
     <Filter Include="Object\Player">
       <UniqueIdentifier>{273cf50d-717e-4945-9b40-2e6ffb4c1e1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Tile\Ground">
+      <UniqueIdentifier>{06a80fd2-54ad-4374-8d38-befe51ac60c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -219,6 +222,9 @@
     <ClInclude Include="CMissile.h">
       <Filter>Object\Player</Filter>
     </ClInclude>
+    <ClInclude Include="CGround.h">
+      <Filter>Object\Tile\Ground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -337,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="CMissile.cpp">
       <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CGround.cpp">
+      <Filter>Object\Tile\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

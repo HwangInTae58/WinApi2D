@@ -29,11 +29,11 @@ public:
 	void SetImgIdx(UINT idx);
 	void SetX(int x);
 	void SetY(int y);
-	void SetGroup(GROUP_TILE group);
+	virtual void SetGroup(GROUP_TILE group);
 
-	int GetIdx();
-	int GetX();
-	int GetY();
+	virtual int GetIdx();
+	virtual int GetX();
+	virtual int GetY();
 	GROUP_TILE GetGroup();
 
 	virtual void Save(FILE* pFile);
