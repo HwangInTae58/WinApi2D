@@ -119,7 +119,7 @@ void CupHead::OnCollisionEnter(CCollider* _pOther)
 		m_isGravity = false;
 		m_Gravity = 0.f;
 		m_blsFloor = true;
-		JumpKeyDown = false;
+		
 	}
 }
 
@@ -159,7 +159,8 @@ void CupHead::CreateMissile()
 void CupHead::update_move()
 {
 	fPoint pos = GetPos();
-	
+	m_fVelocity = 0.f;
+	JumpKeyDown = false;
 	if (m_isGravity == true)
 	{
 		m_fDir.y -= m_Gravity * fDT;
@@ -192,8 +193,9 @@ void CupHead::update_move()
 		if(m_blsFloor && !JumpKeyDown){
 		m_eCurState = PLAYER_STATE::JUMP;
 		JumpKeyDown = true;
-		JumpForce = 900.f;
-		pos.y -= JumpForce * fDT;
+		JumpForce = 500.f;
+		m_fDir.y = JumpForce;
+		pos.y -= m_fDir.y * fDT;
 		}
 		
 	}
