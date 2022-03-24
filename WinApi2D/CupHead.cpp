@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CupHead.h"
 #include "CMissile.h"
+#include "CExMissile.h"
 #include "CCollider.h"
 #include "CTile.h"
 #include "CAnimator.h"
@@ -115,12 +116,16 @@ void CupHead::OnCollision(CCollider* _pOther)
 void CupHead::OnCollisionEnter(CCollider* _pOther)
 {
 	m_iCollCount++;
-	
+	fPoint vPos = GetPos();
 	if (_pOther->GetObj()->GetName() == L"Tile")
 	{	
 		m_isGravity = false;
 		m_Gravity = 0.f;
 		m_blsFloor = true;
+		if (vPos.y < _pOther->GetFinalPos().y)
+		{
+			m_eCurState = PLAYER_STATE::IDLE;
+		}
 		
 	}
 }
@@ -148,6 +153,7 @@ void CupHead::CreateMissile()
 	{
 		pMissile->SetDir(fVec2(1, 0));
 		fpMissilePos.x += GetScale().x / 2.f;
+		
 	}
 	else if (m_iCurDir == 2)
 	{
@@ -158,11 +164,31 @@ void CupHead::CreateMissile()
 	CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
 }
 
+void CupHead::CreateEX()
+{
+	fPoint fpEXMissilePos = GetPos();
+	CExMissile* pEXMissile = new CExMissile;
+	pEXMissile->SetPos(fpEXMissilePos);
+	if (m_iCurDir == 1)
+	{
+		pEXMissile->SetDir(fVec2(1, 0));
+		fpEXMissilePos.x += GetScale().x / 2.f;
+
+	}
+	else if (m_iCurDir == 2)
+	{
+		pEXMissile->SetDir(fVec2(-1, 0));
+		fpEXMissilePos.x += GetScale().x / -2.f;
+	}
+	pEXMissile->SetName(L"EX");
+	CreateObj(pEXMissile, GROUP_GAMEOBJ::EXMISSILE_PLAYER);
+}
+
 void CupHead::update_move()
 {
 	fPoint pos = GetPos();
 	m_fVelocity = 0.f;
-	if(m_blsFloor){
+	if(m_blsFloor == true){
 	JumpKeyDown = false;
 	}
 	if (m_isGravity == true)
@@ -172,25 +198,34 @@ void CupHead::update_move()
 	}
 	if (Key(VK_LEFT))
 	{
-		m_eCurState = PLAYER_STATE::RUN;
 		m_iCurDir = 2;
+		if (PLAYER_STATE::JUMP != m_eCurState)
+		{
+			m_eCurState = PLAYER_STATE::RUN;
+		}
+		
 		pos.x -= m_fSpeed * fDT;
 		m_fVelocity = m_fSpeed;
 	}
 	if (Key(VK_RIGHT))
 	{
-		m_eCurState = PLAYER_STATE::RUN;
 		m_iCurDir = 1;
+		if (PLAYER_STATE::JUMP != m_eCurState)
+		{
+			m_eCurState = PLAYER_STATE::RUN;
+		}
+		
 			pos.x += m_fSpeed * fDT;
 			m_fVelocity = m_fSpeed;
 	}
 	if (Key(VK_UP))
 	{
-			
+	
 	}
 	if (Key(VK_DOWN))
 	{
-		
+		m_eCurState = PLAYER_STATE::DOCK;
+	
 	}
 
 	if (KeyDown('Z'))
@@ -208,7 +243,14 @@ void CupHead::update_move()
 	if (KeyDown('X'))
 	{
 		m_eCurState = PLAYER_STATE::ATTACK;
+		m_Attack = true;
 		CreateMissile();
+	}
+	if (KeyDown('V'))
+	{
+		m_eCurState = PLAYER_STATE::EXATTACK;
+		m_Attack = true;
+		CreateEX();
 	}
 	if (0.f == m_fVelocity && PLAYER_STATE::JUMP != m_eCurState)
 	{
@@ -231,17 +273,36 @@ void CupHead::update_animation()
 	{
 		if (2 == m_iCurDir && m_blsFloor && m_fVelocity == 0 && !JumpKeyDown)
 		{
+			if (m_eCurState == PLAYER_STATE::ATTACK && m_ePreState == PLAYER_STATE::IDLE)
+			{
+				GetAnimator()->Play(L"LSS");
+			}
 			GetAnimator()->Play(L"LNone");
+			
 		}
 		if (1 == m_iCurDir && m_blsFloor && m_fVelocity == 0 && !JumpKeyDown)
 		{
+			if (m_eCurState == PLAYER_STATE::ATTACK && m_ePreState == PLAYER_STATE::IDLE)
+			{
+				GetAnimator()->Play(L"RSS");
+			}
 			GetAnimator()->Play(L"RNone");
+			
 		}
+		
+		
 	}
 	break;
 	case PLAYER_STATE::DOCK:
 	{
-
+		if (2 == m_iCurDir && m_blsFloor && m_fVelocity <= 0 && !JumpKeyDown)
+		{
+			GetAnimator()->Play(L"LDU");
+		}
+		if (1 == m_iCurDir && m_blsFloor && m_fVelocity <= 0 && !JumpKeyDown)
+		{
+			GetAnimator()->Play(L"RDU");
+		}
 	}
 	break;
 	case PLAYER_STATE::RUN:
@@ -286,14 +347,7 @@ void CupHead::update_animation()
 	break;
 	case PLAYER_STATE::ATTACK:
 	{
-		if (1 == m_iCurDir && m_blsFloor)
-		{
-			GetAnimator()->Play(L"RSS");
-		}
-		if (2 == m_iCurDir && m_blsFloor)
-		{
-			GetAnimator()->Play(L"LSS");
-		}
+		
 	}
 	break;
 	case PLAYER_STATE::DEAD:

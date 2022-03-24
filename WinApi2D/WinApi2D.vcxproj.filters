@@ -82,6 +82,12 @@
     <Filter Include="Object\Player">
       <UniqueIdentifier>{273cf50d-717e-4945-9b40-2e6ffb4c1e1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Monster">
+      <UniqueIdentifier>{5de21e0b-90c7-4e6d-94b9-fc0f87005d7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player\missile">
+      <UniqueIdentifier>{ff717023-6988-49bb-b781-381dc33eb1d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -216,8 +222,14 @@
     <ClInclude Include="CupHead.h">
       <Filter>Object\Player</Filter>
     </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CExMissile.h">
+      <Filter>Object\Player\missile</Filter>
+    </ClInclude>
     <ClInclude Include="CMissile.h">
-      <Filter>Object\Player</Filter>
+      <Filter>Object\Player\missile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -335,8 +347,14 @@
     <ClCompile Include="CupHead.cpp">
       <Filter>Object\Player</Filter>
     </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CExMissile.cpp">
+      <Filter>Object\Player\missile</Filter>
+    </ClCompile>
     <ClCompile Include="CMissile.cpp">
-      <Filter>Object\Player</Filter>
+      <Filter>Object\Player\missile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

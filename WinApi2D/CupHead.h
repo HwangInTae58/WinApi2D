@@ -10,6 +10,7 @@ enum class PLAYER_STATE
 	RUN,
 	JUMP,
 	ATTACK,
+	EXATTACK,
 	DEAD,
 
 
@@ -38,6 +39,7 @@ private:
 	float m_fSpeed = 300;
 	float m_fVelocity;  //가속도
 	
+	bool m_Attack = false;
 	bool m_isGravity;
 	bool m_blsFloor;
 	int m_iCollCount;
@@ -58,7 +60,7 @@ public:
 	virtual void OnCollisionExit(CCollider* _pOther);	// 재정의용 탈충돌 가상함수
 
 	void CreateMissile();
-
+	void CreateEX();
 
 	virtual void update();
 	virtual void render();
