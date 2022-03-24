@@ -1,12 +1,14 @@
 #pragma once
 #include "CGameObject.h"
+
 class CMissile : public CGameObject
 {
 private:
 	CD2DImage* m_missile;
+	CD2DImage* m_midead;
 	fVec2 m_fvDir;
 	float m_fSpeed = 800.f;
-
+	int iHP = 1;
 
 public:
 	CMissile();

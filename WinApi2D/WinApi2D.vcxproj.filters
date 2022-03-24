@@ -88,6 +88,9 @@
     <Filter Include="Object\Player\missile">
       <UniqueIdentifier>{ff717023-6988-49bb-b781-381dc33eb1d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Monster\Missile">
+      <UniqueIdentifier>{21009cca-cd96-452f-b019-896ec6f44a86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -231,6 +234,12 @@
     <ClInclude Include="CMissile.h">
       <Filter>Object\Player\missile</Filter>
     </ClInclude>
+    <ClInclude Include="CTraceState.h">
+      <Filter>Engine\Component\AI\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CAcorn.h">
+      <Filter>Object\Monster\Missile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -355,6 +364,12 @@
     </ClCompile>
     <ClCompile Include="CMissile.cpp">
       <Filter>Object\Player\missile</Filter>
+    </ClCompile>
+    <ClCompile Include="CTraceState.cpp">
+      <Filter>Engine\Component\AI\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CAcorn.cpp">
+      <Filter>Object\Monster\Missile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

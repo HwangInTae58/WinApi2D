@@ -7,6 +7,8 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 
+CupHead* CupHead::instance = nullptr;
+
 CupHead::CupHead()
 {
 	m_eCurState = PLAYER_STATE::IDLE;
@@ -23,6 +25,7 @@ CupHead::CupHead()
 	m_Idle = CResourceManager::getInst()->LoadD2DImage(L"Idle", L"texture\\Animation\\Idle_Aim\\Stay.png");
 	m_run = CResourceManager::getInst()->LoadD2DImage(L"Run", L"texture\\Animation\\Run\\Run.png");
 	m_shoot = CResourceManager::getInst()->LoadD2DImage(L"Shoot", L"texture\\Animation\\Shoot\\Shoot.png");
+	m_EXshoot = CResourceManager::getInst()->LoadD2DImage(L"EXShoot", L"texture\\Animation\\Special Attck\\Ground\\EXatc.png");
 	m_duck = CResourceManager::getInst()->LoadD2DImage(L"Duck", L"texture\\Animation\\Duck\\Duck.png");
 	m_jump = CResourceManager::getInst()->LoadD2DImage(L"Jump", L"texture\\Animation\\Jump\\Jump.png");
 	SetName(L"Player");
@@ -38,7 +41,7 @@ CupHead::CupHead()
 	//애니메이션 생성
 	CreateAnimator();
 	//인트로
-	GetAnimator()->CreateAnimation(L"intro", m_Intro, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.1f, 28);
+	//GetAnimator()->CreateAnimation(L"intro", m_Intro, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.1f, 28);
 	//가만히
 	GetAnimator()->CreateAnimation(L"RNone", m_Idle, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.09f, 5, false/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"LNone", m_Idle, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.09f, 5, true/*좌우 반전*/);
@@ -58,6 +61,9 @@ CupHead::CupHead()
 	//달리기
 	GetAnimator()->CreateAnimation(L"LRun", m_run, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, true/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"RRun", m_run, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, false/*좌우 반전*/);
+	GetAnimator()->CreateAnimation(L"LSRun", m_run, fPoint(0.f, 100.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, true/*좌우 반전*/);
+	GetAnimator()->CreateAnimation(L"RSRun", m_run, fPoint(0.f, 100.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.07f, 16, false/*좌우 반전*/);
+
 	//사격
 	GetAnimator()->CreateAnimation(L"RSS", m_shoot, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 3, false/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"LSS", m_shoot, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 3, true/*좌우 반전*/);
@@ -69,6 +75,9 @@ CupHead::CupHead()
 	GetAnimator()->CreateAnimation(L"LDUS", m_shoot, fPoint(0.f, 300.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 3, true/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"RDDS", m_shoot, fPoint(0.f, 400.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 3, false/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"LDDS", m_shoot, fPoint(0.f, 400.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 3, true/*좌우 반전*/);
+	//EX
+	GetAnimator()->CreateAnimation(L"RESS", m_EXshoot, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.1f, 15, false/*좌우 반전*/);
+	GetAnimator()->CreateAnimation(L"LESS", m_EXshoot, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.1f, 15, true/*좌우 반전*/);
 	//점프
 	GetAnimator()->CreateAnimation(L"RJM", m_jump, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.05f, 8, false/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"LJM", m_jump, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.05f, 8, true/*좌우 반전*/);
@@ -87,6 +96,12 @@ CupHead* CupHead::Clone()
 
 void CupHead::update()
 {
+	if (m_Delay >= -1.f) {
+		if (m_Delay <= 0) {
+			m_Attack = false;
+		}
+		m_Delay -= fDT;
+	}
 	SetGravity(true);
 	update_move();
 	update_animation();
@@ -160,7 +175,6 @@ void CupHead::CreateMissile()
 		pMissile->SetDir(fVec2(-1, 0));
 		fpMissilePos.x += GetScale().x / -2.f;
 	}
-	pMissile->SetName(L"Missile");
 	CreateObj(pMissile, GROUP_GAMEOBJ::MISSILE_PLAYER);
 }
 
@@ -187,7 +201,11 @@ void CupHead::CreateEX()
 void CupHead::update_move()
 {
 	fPoint pos = GetPos();
+	m_Attack = false;
 	m_fVelocity = 0.f;
+	//딜레이
+	
+	//중력
 	if(m_blsFloor == true){
 	JumpKeyDown = false;
 	}
@@ -196,6 +214,7 @@ void CupHead::update_move()
 		m_fDir.y -= m_Gravity * fDT;
 		pos.y += -m_fDir.y   * fDT;
 	}
+
 	if (Key(VK_LEFT))
 	{
 		m_iCurDir = 2;
@@ -225,7 +244,6 @@ void CupHead::update_move()
 	if (Key(VK_DOWN))
 	{
 		m_eCurState = PLAYER_STATE::DOCK;
-	
 	}
 
 	if (KeyDown('Z'))
@@ -240,19 +258,27 @@ void CupHead::update_move()
 		}
 		
 	}
-	if (KeyDown('X'))
+	if (Key('X') && m_Delay <= 0)
 	{
-		m_eCurState = PLAYER_STATE::ATTACK;
+		
 		m_Attack = true;
+		m_Delay = 0.15f;
+		m_eCurState = PLAYER_STATE::ATTACK;
+		GetAnimator()->FindAnimation(L"RSS")->SetFrame(0);
+		GetAnimator()->FindAnimation(L"LSS")->SetFrame(0);
 		CreateMissile();
 	}
 	if (KeyDown('V'))
 	{
+		//TODO : 나오는 속도 조절, 몬스터를 몇번 맞추었을때 쓸 수 있게 바꿔야함
+		m_EXAttack = true;
+		
 		m_eCurState = PLAYER_STATE::EXATTACK;
-		m_Attack = true;
-		CreateEX();
+		GetAnimator()->FindAnimation(L"RESS")->SetFrame(0);
+		GetAnimator()->FindAnimation(L"LESS")->SetFrame(0);
+			//CreateEX();
 	}
-	if (0.f == m_fVelocity && PLAYER_STATE::JUMP != m_eCurState)
+	if (0.f == m_fVelocity && PLAYER_STATE::JUMP != m_eCurState && PLAYER_STATE::ATTACK != m_eCurState)
 	{
 		m_eCurState = PLAYER_STATE::IDLE;
 	}
@@ -271,23 +297,14 @@ void CupHead::update_animation()
 		break;
 	case PLAYER_STATE::IDLE:
 	{
-		if (2 == m_iCurDir && m_blsFloor && m_fVelocity == 0 && !JumpKeyDown)
+		if (2 == m_iCurDir && m_blsFloor )
 		{
-			if (m_eCurState == PLAYER_STATE::ATTACK && m_ePreState == PLAYER_STATE::IDLE)
-			{
-				GetAnimator()->Play(L"LSS");
-			}
 			GetAnimator()->Play(L"LNone");
 			
 		}
-		if (1 == m_iCurDir && m_blsFloor && m_fVelocity == 0 && !JumpKeyDown)
+		if (1 == m_iCurDir && m_blsFloor)
 		{
-			if (m_eCurState == PLAYER_STATE::ATTACK && m_ePreState == PLAYER_STATE::IDLE)
-			{
-				GetAnimator()->Play(L"RSS");
-			}
 			GetAnimator()->Play(L"RNone");
-			
 		}
 		
 		
@@ -309,10 +326,17 @@ void CupHead::update_animation()
 	{
 		if (2 == m_iCurDir && m_blsFloor && m_fVelocity > 0 && !JumpKeyDown)
 		{
+			if (m_Attack) {
+				GetAnimator()->Play(L"LSRun"); 
+			}
 			GetAnimator()->Play(L"LRun");
 		}
+		
 		if (1 == m_iCurDir && m_blsFloor && m_fVelocity > 0 && !JumpKeyDown)
 		{
+			if (m_Attack) {
+				GetAnimator()->Play(L"RSRun");
+			}
 			GetAnimator()->Play(L"RRun");
 		}
 		break;
@@ -347,7 +371,27 @@ void CupHead::update_animation()
 	break;
 	case PLAYER_STATE::ATTACK:
 	{
+		if (2 == m_iCurDir && m_blsFloor && m_Attack)
+		{
+			GetAnimator()->Play(L"LSS");
+		}
+		else if (1 == m_iCurDir && m_blsFloor && m_Attack)
+		{
 		
+			GetAnimator()->Play(L"RSS");
+		}
+	}
+	break;
+	case PLAYER_STATE::EXATTACK:
+	{
+		if (2 == m_iCurDir && m_blsFloor && m_EXAttack)
+		{
+			GetAnimator()->Play(L"LESS");
+		}
+		else if (1 == m_iCurDir && m_blsFloor && m_EXAttack)
+		{
+			GetAnimator()->Play(L"RESS");
+		}
 	}
 	break;
 	case PLAYER_STATE::DEAD:
@@ -358,6 +402,16 @@ void CupHead::update_animation()
 	}
 	
 	
+}
+
+void CupHead::RegisterPlayer()
+{
+	instance = this;
+}
+
+CupHead* CupHead::GetPlayer()
+{
+	return instance;
 }
 
 

@@ -33,9 +33,8 @@ void CExMissile::update()
 	fPoint pos = GetPos();
 	pos.x += m_fSpeed * m_fvDir.x * fDT;
 	pos.y += m_fSpeed * m_fvDir.y * fDT;
-
+	
 	SetPos(pos);
-
 	if (pos.x < 0 || pos.x > WINSIZEX * 2
 		|| pos.y < 0 || pos.y > WINSIZEY * 2)
 

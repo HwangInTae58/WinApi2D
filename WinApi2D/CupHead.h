@@ -1,7 +1,10 @@
 #pragma once
 #include "CGameObject.h"
 
-
+struct tPInfo
+{
+	float fHP;
+};
 enum class PLAYER_STATE
 {
 	INTRO,
@@ -21,11 +24,15 @@ enum class PLAYER_STATE
 class CupHead : public CGameObject
 {
 private:
+
+	static CupHead* instance;
+
 	//벡터 사용 정리
 	CD2DImage* m_Intro;
 	CD2DImage* m_Idle;
 	CD2DImage* m_run;
 	CD2DImage* m_shoot;
+	CD2DImage* m_EXshoot;
 	CD2DImage* m_duck;
 	CD2DImage* m_jump;
 
@@ -40,6 +47,11 @@ private:
 	float m_fVelocity;  //가속도
 	
 	bool m_Attack = false;
+	bool m_EXAttack = false;
+
+	float m_Delay = 0;
+	float m_DelayTime = 0;
+
 	bool m_isGravity;
 	bool m_blsFloor;
 	int m_iCollCount;
@@ -51,6 +63,7 @@ private:
 
 
 public:
+	
 	CupHead();
 	~CupHead();
 	virtual CupHead* Clone();
@@ -68,6 +81,7 @@ public:
 	void update_move();
 	void update_animation();
 
-
+	void RegisterPlayer();
+	static CupHead* GetPlayer();	// 게임 내에 하나만 있는 플레이어 객체 확인(임의로 싱글톤 선언)
 };
 
