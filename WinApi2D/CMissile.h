@@ -5,7 +5,7 @@ class CMissile : public CGameObject
 private:
 	CD2DImage* m_missile;
 	fVec2 m_fvDir;
-	float m_fSpeed = 600.f;
+	float m_fSpeed = 800.f;
 	bool m_bIsLeft;
 
 public:

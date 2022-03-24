@@ -15,7 +15,6 @@ CupHead::CupHead()
 	m_blsFloor = GetFloor();
 	m_iCollCount = 0;
 	m_fVelocity = 0;
-	m_Hight = 0;
 	m_isGravity = GetGravity();
 	m_isGravity = true;
 	//사진 불러오기
@@ -27,7 +26,7 @@ CupHead::CupHead()
 	m_jump = CResourceManager::getInst()->LoadD2DImage(L"Jump", L"texture\\Animation\\Jump\\Jump.png");
 	SetName(L"Player");
 	//위치 크기 지정
-	SetPos(fPoint(100.f,405.f));
+	SetPos(fPoint(100.f,595.f));
 	SetScale(fPoint(70.f, 100.f));
 	
 	//충돌체
@@ -40,8 +39,8 @@ CupHead::CupHead()
 	//인트로
 	GetAnimator()->CreateAnimation(L"intro", m_Intro, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.1f, 28);
 	//가만히
-	GetAnimator()->CreateAnimation(L"RNone", m_Idle, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, false/*좌우 반전*/);
-	GetAnimator()->CreateAnimation(L"LNone", m_Idle, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*좌우 반전*/);
+	GetAnimator()->CreateAnimation(L"RNone", m_Idle, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.09f, 5, false/*좌우 반전*/);
+	GetAnimator()->CreateAnimation(L"LNone", m_Idle, fPoint(0.f, 0.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.09f, 5, true/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"RA", m_Idle, fPoint(0.f, 100.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, false/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"LA", m_Idle, fPoint(0.f,100.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, true/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"RU", m_Idle, fPoint(0.f, 200.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 5, false/*좌우 반전*/);
@@ -70,8 +69,8 @@ CupHead::CupHead()
 	GetAnimator()->CreateAnimation(L"RDDS", m_shoot, fPoint(0.f, 400.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 3, false/*좌우 반전*/);
 	GetAnimator()->CreateAnimation(L"LDDS", m_shoot, fPoint(0.f, 400.f), fPoint(70.f, 100.f), fPoint(70.f, 0.f), 0.12f, 3, true/*좌우 반전*/);
 	//점프
-	GetAnimator()->CreateAnimation(L"RJM", m_jump, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.1f, 8, false/*좌우 반전*/);
-	GetAnimator()->CreateAnimation(L"LJM", m_jump, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.1f, 8, true/*좌우 반전*/);
+	GetAnimator()->CreateAnimation(L"RJM", m_jump, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.05f, 8, false/*좌우 반전*/);
+	GetAnimator()->CreateAnimation(L"LJM", m_jump, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.05f, 8, true/*좌우 반전*/);
 
 	GetAnimator()->Play(L"RNone");
 }
@@ -102,8 +101,11 @@ void CupHead::render()
 
 void CupHead::OnCollision(CCollider* _pOther)
 {
+	fPoint pos = GetPos();
 	if (_pOther->GetObj()->GetName() == L"Tile" && m_iCollCount > 0 )
 	{
+		fPoint otherPos = _pOther->GetFinalPos();
+		pos.y -= otherPos.y + pos.y;
 		m_isGravity = false;
 		m_Gravity = 0.f;
 		m_blsFloor = true;
@@ -147,7 +149,7 @@ void CupHead::CreateMissile()
 		pMissile->SetDir(fVec2(1, 0));
 		fpMissilePos.x += GetScale().x / 2.f;
 	}
-	else if (m_iCurDir == -1)
+	else if (m_iCurDir == 2)
 	{
 		pMissile->SetDir(fVec2(-1, 0));
 		fpMissilePos.x += GetScale().x / -2.f;
@@ -160,23 +162,25 @@ void CupHead::update_move()
 {
 	fPoint pos = GetPos();
 	m_fVelocity = 0.f;
+	if(m_blsFloor){
 	JumpKeyDown = false;
+	}
 	if (m_isGravity == true)
 	{
 		m_fDir.y -= m_Gravity * fDT;
-		pos.y += -m_fDir.y * fDT;
+		pos.y += -m_fDir.y   * fDT;
 	}
 	if (Key(VK_LEFT))
 	{
-		m_iCurDir == -1;
 		m_eCurState = PLAYER_STATE::RUN;
-			pos.x -= m_fSpeed * fDT;
-			m_fVelocity = m_fSpeed;
+		m_iCurDir = 2;
+		pos.x -= m_fSpeed * fDT;
+		m_fVelocity = m_fSpeed;
 	}
 	if (Key(VK_RIGHT))
 	{
 		m_eCurState = PLAYER_STATE::RUN;
-		m_iCurDir == 1;
+		m_iCurDir = 1;
 			pos.x += m_fSpeed * fDT;
 			m_fVelocity = m_fSpeed;
 	}
@@ -186,16 +190,18 @@ void CupHead::update_move()
 	}
 	if (Key(VK_DOWN))
 	{
+		
 	}
 
 	if (KeyDown('Z'))
 	{
-		if(m_blsFloor && !JumpKeyDown){
+		if(!JumpKeyDown){
 		m_eCurState = PLAYER_STATE::JUMP;
 		JumpKeyDown = true;
-		JumpForce = 500.f;
+		JumpForce = 450.f;
 		m_fDir.y = JumpForce;
 		pos.y -= m_fDir.y * fDT;
+		
 		}
 		
 	}
@@ -223,11 +229,11 @@ void CupHead::update_animation()
 		break;
 	case PLAYER_STATE::IDLE:
 	{
-		if (-1 == m_iCurDir && m_blsFloor && m_fVelocity == 0)
+		if (2 == m_iCurDir && m_blsFloor && m_fVelocity == 0 && !JumpKeyDown)
 		{
 			GetAnimator()->Play(L"LNone");
 		}
-		else if (1 == m_iCurDir && m_blsFloor && m_fVelocity == 0)
+		if (1 == m_iCurDir && m_blsFloor && m_fVelocity == 0 && !JumpKeyDown)
 		{
 			GetAnimator()->Play(L"RNone");
 		}
@@ -240,11 +246,11 @@ void CupHead::update_animation()
 	break;
 	case PLAYER_STATE::RUN:
 	{
-		if (-1 == m_iCurDir && m_blsFloor && m_fVelocity > 0)
+		if (2 == m_iCurDir && m_blsFloor && m_fVelocity > 0 && !JumpKeyDown)
 		{
 			GetAnimator()->Play(L"LRun");
 		}
-		else if (1 == m_iCurDir && m_blsFloor && m_fVelocity > 0)
+		if (1 == m_iCurDir && m_blsFloor && m_fVelocity > 0 && !JumpKeyDown)
 		{
 			GetAnimator()->Play(L"RRun");
 		}
@@ -252,19 +258,42 @@ void CupHead::update_animation()
 	}
 	case PLAYER_STATE::JUMP:
 	{
-		if (-1 == m_iCurDir)
+		if (2 == m_iCurDir  && JumpKeyDown)
 		{
 			GetAnimator()->Play(L"LJM");
+			if (1 == m_iCurDir && JumpKeyDown && !m_blsFloor)
+			{
+				// TODO : 여기 점프중 방향키 바뀔때 이미지 바꾸기 
+				GetAnimator()->Play(L"RJM");
+			}
+			if (m_blsFloor) {
+				m_eCurState = PLAYER_STATE::IDLE;
+			}
 		}
-		else if (1 == m_iCurDir)
+		if (1 == m_iCurDir  && JumpKeyDown)
 		{
 			GetAnimator()->Play(L"RJM");
+			if (2 == m_iCurDir && JumpKeyDown && !m_blsFloor)
+			{
+				GetAnimator()->Play(L"LJM");
+			}
+			if (m_blsFloor) {
+				m_eCurState = PLAYER_STATE::IDLE;
+			}
 		}
+		
 	}
 	break;
 	case PLAYER_STATE::ATTACK:
 	{
-
+		if (1 == m_iCurDir && m_blsFloor)
+		{
+			GetAnimator()->Play(L"RSS");
+		}
+		if (2 == m_iCurDir && m_blsFloor)
+		{
+			GetAnimator()->Play(L"LSS");
+		}
 	}
 	break;
 	case PLAYER_STATE::DEAD:

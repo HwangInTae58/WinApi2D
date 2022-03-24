@@ -46,7 +46,7 @@ private:
 	fPoint m_fDir;
 	float JumpForce =700;
 	bool JumpKeyDown = false;
-	float m_Hight;
+
 
 public:
 	CupHead();
