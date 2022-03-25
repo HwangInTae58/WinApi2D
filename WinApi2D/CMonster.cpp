@@ -6,11 +6,13 @@
 #include "AI.h"
 #include "CIdleState.h"
 #include "CTraceState.h"
+#include "CCreateState.h"
 CMonster::CMonster()
 {
 	m_pAI = nullptr;
 	m_Idle = CResourceManager::getInst()->LoadD2DImage(L"MonsterIdle", L"texture\\Boss\\Cagney Carnation\\Idle\\Idle.png");
-	m_Create = CResourceManager::getInst()->LoadD2DImage(L"MonsterIdle", L"texture\\Boss\\Cagney Carnation\\create\\create.png");
+	m_Create = CResourceManager::getInst()->LoadD2DImage(L"MonsterCreate", L"texture\\Boss\\Cagney Carnation\\create\\create.png");
+	m_CreateIng = CResourceManager::getInst()->LoadD2DImage(L"MonsterCreateIng", L"texture\\Boss\\Cagney Carnation\\create\\create.png");
 	SetName(L"Monster");
 	SetScale(fPoint(400, 500));
 
@@ -20,6 +22,8 @@ CMonster::CMonster()
 
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"MonIdle", m_Idle, fPoint(0, 0), fPoint(400.f, 600.f), fPoint(400.f, 0), 0.06f, 18);
+	GetAnimator()->CreateAnimation(L"MonCreate", m_Create, fPoint(0, 0), fPoint(400.f, 600.f), fPoint(400.f, 0), 0.059f, 22);
+	GetAnimator()->CreateAnimation(L"MonCreateIng", m_CreateIng, fPoint(7200, 0), fPoint(400.f, 600.f), fPoint(400.f, 0), 0.1f, 4);
 
 	GetAnimator()->Play(L"MonIdle");
 }
@@ -56,17 +60,25 @@ CMonster* CMonster::Create(MON_TYPE type, fPoint pos)
 		info.fAtt = 1.f;
 		info.fAttRange = 50.f;
 		info.fRecogRange = 300.f;
-		info.fHP = 10.f;
+		info.fHP = 100.f;
 
 		AI* pAI = new AI;
 		pAI->AddState(new CIdleState(STATE_MON::IDLE));
 		pAI->AddState(new CTraceState(STATE_MON::TRACE));
+		pAI->AddState(new CCreateState(STATE_MON::CREATE));
+		
+
 		pAI->SetCurState(STATE_MON::IDLE);
 		pMon->SetMonInfo(info);
 		pMon->SetAI(pAI);
 	}
 	break;
 	case MON_TYPE::RANGE:
+	{
+		
+
+
+	}
 		break;
 	default:
 		break;
@@ -107,6 +119,12 @@ const tMonInfo& CMonster::GetMonInfo()
 	return m_tInfo;
 }
 
+
+void CMonster::update_animation()
+{
+	
+
+}
 
 void CMonster::SetAI(AI* ai)
 {

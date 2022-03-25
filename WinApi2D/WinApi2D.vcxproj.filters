@@ -91,6 +91,15 @@
     <Filter Include="Object\Monster\Missile">
       <UniqueIdentifier>{21009cca-cd96-452f-b019-896ec6f44a86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Component\AI\State\Create">
+      <UniqueIdentifier>{9c979c5d-7481-4109-9d50-ad4dc0047893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\AI\State\Idle">
+      <UniqueIdentifier>{fa44aa27-891c-4215-be7f-e552de55a123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\AI\State\Trace">
+      <UniqueIdentifier>{5d3cb464-2331-477c-a87e-26346f8d6e99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -207,9 +216,6 @@
     <ClInclude Include="CState.h">
       <Filter>Engine\Component\AI\State</Filter>
     </ClInclude>
-    <ClInclude Include="CIdleState.h">
-      <Filter>Engine\Component\AI\State</Filter>
-    </ClInclude>
     <ClInclude Include="CImageObject.h">
       <Filter>Object\Title</Filter>
     </ClInclude>
@@ -234,11 +240,17 @@
     <ClInclude Include="CMissile.h">
       <Filter>Object\Player\missile</Filter>
     </ClInclude>
-    <ClInclude Include="CTraceState.h">
-      <Filter>Engine\Component\AI\State</Filter>
-    </ClInclude>
     <ClInclude Include="CAcorn.h">
       <Filter>Object\Monster\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="CCreateState.h">
+      <Filter>Engine\Component\AI\State\Create</Filter>
+    </ClInclude>
+    <ClInclude Include="CIdleState.h">
+      <Filter>Engine\Component\AI\State\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="CTraceState.h">
+      <Filter>Engine\Component\AI\State\Trace</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -338,9 +350,6 @@
     <ClCompile Include="CState.cpp">
       <Filter>Engine\Component\AI\State</Filter>
     </ClCompile>
-    <ClCompile Include="CIdleState.cpp">
-      <Filter>Engine\Component\AI\State</Filter>
-    </ClCompile>
     <ClCompile Include="CImageObject.cpp">
       <Filter>Object\Title</Filter>
     </ClCompile>
@@ -365,11 +374,17 @@
     <ClCompile Include="CMissile.cpp">
       <Filter>Object\Player\missile</Filter>
     </ClCompile>
-    <ClCompile Include="CTraceState.cpp">
-      <Filter>Engine\Component\AI\State</Filter>
-    </ClCompile>
     <ClCompile Include="CAcorn.cpp">
       <Filter>Object\Monster\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="CCreateState.cpp">
+      <Filter>Engine\Component\AI\State\Create</Filter>
+    </ClCompile>
+    <ClCompile Include="CIdleState.cpp">
+      <Filter>Engine\Component\AI\State\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="CTraceState.cpp">
+      <Filter>Engine\Component\AI\State\Trace</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

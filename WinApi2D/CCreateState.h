@@ -1,17 +1,19 @@
 #pragma once
 #include "CState.h"
-class CIdleState : public CState
+class CCreateState : public CState
 {
 private:
 	float m_fDT;
+
+	CMonster* pMonster;
 public:
-	CIdleState(STATE_MON state);
-	virtual ~CIdleState();
+	CCreateState(STATE_MON state);
+	virtual ~CCreateState();
+
+	void CreateAcorn();
 
 	virtual void update();
 	virtual void Enter();
 	virtual void Exit();
-
-
 };
 

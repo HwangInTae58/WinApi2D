@@ -34,7 +34,13 @@ CMissile* CMissile::Clone()
 
 void CMissile::update()
 {
-	
+	if (m_bDead)
+	{
+		m_Delay += fDT;
+		if(m_Delay >= 0.6f){
+		DeleteObj(this);
+		}
+	}
 	
 	fPoint pos = GetPos();
 	pos.x += m_fSpeed * m_fvDir.x * fDT;
@@ -42,8 +48,10 @@ void CMissile::update()
 
 	SetPos(pos);
 
-	if (pos.x < 0 || pos.x > WINSIZEX * 2
-		|| pos.y < 0 || pos.y > WINSIZEY * 2)
+	if (pos.x < 0 || pos.x > WINSIZEX
+		|| pos.y < 0 || pos.y > WINSIZEY) {
+		DeleteObj(this);
+	}
 
 	update_move();
 	update_animation();
@@ -97,14 +105,10 @@ void CMissile::OnCollisionEnter(CCollider* pOther)
 	fPoint pos = GetPos();
 	if (pOtherObj->GetName() == L"Monster")
 	{
+		m_bDead = true;
 		fHP -= 1;
 		SetDir(fPoint(0, 0));
 		SetPos(pos);
-		if (m_Delay >= 0.6f) {
-			if (m_Delay >= 0) {
-				DeleteObj(this);
-			}
-			m_Delay += fDT;
-		}
+	
 	}
 }

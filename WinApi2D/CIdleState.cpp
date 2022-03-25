@@ -15,26 +15,19 @@ CIdleState::~CIdleState()
 
 void CIdleState::update()
 {
-	CupHead* pPlayer = CupHead::GetPlayer();
-	if (nullptr == pPlayer)
-		return;
-
-	fPoint fptPlayerPos = pPlayer->GetPos();
-
+	m_fDT += fDT;
 	CMonster* pMonster = GetMonster();
-	fPoint fptMonsterPos = pMonster->GetPos();
-
-	fVec2 fvDiff = fptPlayerPos - fptMonsterPos;
-	float fLen = fvDiff.Length();
-	if (fLen < pMonster->GetMonInfo().fRecogRange)
+	
+	if (m_fDT > 3.f)
 	{
-		ChangeAIState(GetOwnerAI(), STATE_MON::TRACE);
+		ChangeAIState(GetOwnerAI(), STATE_MON::CREATE);
 	}
-	pMonster->GetAnimator()->Play(L"PlayerStand");
+	pMonster->GetAnimator()->Play(L"MonIdle");
 }
 
 void CIdleState::Enter()
 {
+	m_fDT = 0;
 }
 
 void CIdleState::Exit()

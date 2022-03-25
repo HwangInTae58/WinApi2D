@@ -1,10 +1,7 @@
 #pragma once
 #include "CGameObject.h"
 
-struct tPInfo
-{
-	float fHP;
-};
+
 enum class PLAYER_STATE
 {
 	INTRO,
@@ -12,8 +9,10 @@ enum class PLAYER_STATE
 	DOCK,
 	RUN,
 	JUMP,
+	RUNATTACK,
 	ATTACK,
 	EXATTACK,
+	HIT,
 	DEAD,
 
 
@@ -34,13 +33,14 @@ private:
 	CD2DImage* m_shoot;
 	CD2DImage* m_EXshoot;
 	CD2DImage* m_duck;
+	CD2DImage* m_HIT;
 	CD2DImage* m_jump;
 
 	PLAYER_STATE m_eCurState; //캐릭터 현재상태
 	PLAYER_STATE m_ePreState; //캐릭터 이전상태
 
-	int          m_iCurDir;	  //현재방향
-	int          m_iPreDir;	  //이전방향
+	bool          m_iCurDir;	  //현재방향
+	bool          m_iPreDir;	  //이전방향
 
 	float m_Gravity = 700;
 	float m_fSpeed = 300;
@@ -48,6 +48,7 @@ private:
 	
 	bool m_Attack = false;
 	bool m_EXAttack = false;
+	bool m_Hit = false;
 
 	float m_Delay = 0;
 	float m_DelayTime = 0;
@@ -61,6 +62,7 @@ private:
 	float JumpForce =700;
 	bool JumpKeyDown = false;
 
+	float fHP = 3.f;
 
 public:
 	
@@ -74,8 +76,6 @@ public:
 
 	void CreateMissile();
 	void CreateEX();
-
-	void Hit();
 
 	virtual void update();
 	virtual void render();

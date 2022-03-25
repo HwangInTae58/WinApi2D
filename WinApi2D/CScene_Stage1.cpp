@@ -51,9 +51,11 @@ void CScene_Stage1::Enter()
 	AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
 
 	//충돌
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_MONSTER, GROUP_GAMEOBJ::PLAYER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
-	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
+	
 	
 	// Camera Look 지정
 	CCameraManager::getInst()->SetLookAt(fPoint(680.f,360.f));

@@ -81,7 +81,7 @@ enum class STATE_MON
 	IDLE,
 	PATROL,
 	TRACE,
-	ATT,
+	CREATE,
 	RUN,
 	DEAD,
 

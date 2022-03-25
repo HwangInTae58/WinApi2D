@@ -3,10 +3,9 @@
 class CAcorn : public CGameObject
 {
 private:
-	CD2DImage* m_missile;
-	CD2DImage* m_midead;
+	CD2DImage* m_Acorn;
 	fVec2 m_fvDir;
-	float m_fSpeed = 800.f;
+	float m_fSpeed = 750.f;
 	float fHP = 1;
 
 	float m_Delay = 0;
@@ -17,7 +16,8 @@ public:
 
 	virtual void update();
 	virtual void render();
-	void update_move();
+
+
 	void update_animation();
 
 	void SetDir(fVec2 vec);

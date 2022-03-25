@@ -23,6 +23,7 @@ class CMonster : public CGameObject
 private:
 	CD2DImage* m_Idle;
 	CD2DImage* m_Create;
+	CD2DImage* m_CreateIng;
 
 	float m_Delay = 0;
 
@@ -42,7 +43,7 @@ public:
 	
 	const tMonInfo& GetMonInfo();
 
-	
+	void update_animation();
 	void SetAI(AI* ai);
 	void SetMonInfo(const tMonInfo& info);
 
