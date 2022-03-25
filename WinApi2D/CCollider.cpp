@@ -12,6 +12,7 @@ CCollider::CCollider()
 	m_fptScale = {};
 	m_iColCount = 0;
 	m_iID = s_iID++;
+
 }
 
 CCollider::CCollider(const CCollider& other)
