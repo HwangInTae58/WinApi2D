@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AI.h" />
+    <ClInclude Include="CAcorn.h" />
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CBackGround.h" />
@@ -160,12 +161,14 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CD2DImage.h" />
     <ClInclude Include="CEventManager.h" />
+    <ClInclude Include="CExMissile.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CIdleState.h" />
     <ClInclude Include="CImageButton.h" />
     <ClInclude Include="CImageObject.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMissile.h" />
+    <ClInclude Include="CMonster.h" />
     <ClInclude Include="CPanelUI.h" />
     <ClInclude Include="CPathManager.h" />
     <ClInclude Include="CRenderManager.h" />
@@ -183,6 +186,7 @@
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTileButton.h" />
     <ClInclude Include="CTimeManager.h" />
+    <ClInclude Include="CTraceState.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="CupHead.h" />
@@ -197,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AI.cpp" />
+    <ClCompile Include="CAcorn.cpp" />
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CBackGround.cpp" />
@@ -207,12 +212,14 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CD2DImage.cpp" />
     <ClCompile Include="CEventManager.cpp" />
+    <ClCompile Include="CExMissile.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CImageButton.cpp" />
     <ClCompile Include="CImageObject.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMissile.cpp" />
+    <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CPanelUI.cpp" />
     <ClCompile Include="CPathManager.cpp" />
     <ClCompile Include="CRenderManager.cpp" />
@@ -230,6 +237,7 @@
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTileButton.cpp" />
     <ClCompile Include="CTimeManager.cpp" />
+    <ClCompile Include="CTraceState.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />
     <ClCompile Include="CMap.cpp" />

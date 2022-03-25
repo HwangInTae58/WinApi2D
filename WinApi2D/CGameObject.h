@@ -18,8 +18,11 @@ private:
 	// Component
 	CCollider* m_pCollider;
 	CAnimator* m_pAnimator;
-
+	bool gravity;
+	bool m_blsFloor;
 	bool m_bAlive;
+
+	int m_iCollCount;
 	void SetDead();
 public:
 	CGameObject();
@@ -50,7 +53,13 @@ public:
 	virtual void OnCollisionEnter(CCollider* _pOther) {}	// 재정의용 충돌시 가상함수
 	virtual void OnCollisionExit(CCollider* _pOther) {}		// 재정의용 탈충돌 가상함수
 
+	bool GetFloor();
+	bool SetFloor(bool other);
+	int GetCollCount();
+	int SetCollCount(int other);
 
+	void SetGravity(bool _active) { gravity = _active; }
+	bool GetGravity() { return gravity; }
 
 	CCollider* GetCollider();				// 충돌체 반환
 	CAnimator* GetAnimator();				// 애니메이터 반환

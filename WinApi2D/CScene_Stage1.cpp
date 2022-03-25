@@ -2,9 +2,11 @@
 #include "CScene_Stage1.h"
 #include "CGameObject.h"
 #include "CupHead.h"
+#include "CMonster.h"
 #include "CMap.h"
 #include "CTile.h"
 #include "CBackGround.h"
+
 CScene_Stage1::CScene_Stage1()
 {
 }
@@ -30,16 +32,12 @@ void CScene_Stage1::Enter()
 	path += L"tile\\Stage1";
 	LoadTile(path);
 
-	/*CTile* tile = new CTile;
-	tile->SetGroup(GROUP_TILE::GROUND);
-	tile->SetName(L"Ground");
-	tile->GetCollider();*/
-	
-	
-
 	// Player 추가
-	CGameObject* pPlayer = new CupHead;
+	CupHead* pPlayer = new CupHead;
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
+
+	CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(1100.f, 420.f));
+	AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
 
 	//맵추가
 	CMap* map = new CMap;
@@ -53,6 +51,8 @@ void CScene_Stage1::Enter()
 	AddObject(backGround, GROUP_GAMEOBJ::BACKGROUND);
 
 	//충돌
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::MISSILE_PLAYER, GROUP_GAMEOBJ::MONSTER);
+	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::MONSTER);
 	CCollisionManager::getInst()->CheckGroup(GROUP_GAMEOBJ::PLAYER, GROUP_GAMEOBJ::TILE);
 	
 	// Camera Look 지정

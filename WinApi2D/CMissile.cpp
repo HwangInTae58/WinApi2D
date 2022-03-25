@@ -8,6 +8,7 @@ CMissile::CMissile()
 	
 	m_fvDir = fVec2(0, 0);
 	m_missile = CResourceManager::getInst()->LoadD2DImage(L"Missile", L"texture\\Animation\\Missile\\missile\\missile.png");
+	m_midead = CResourceManager::getInst()->LoadD2DImage(L"MissileDead", L"texture\\Animation\\Missile\\missile\\missileDeath.png");
 	SetScale(fPoint(60.f, 40.f));
 	SetName(L"missile");
 
@@ -18,7 +19,7 @@ CMissile::CMissile()
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Rmissile1", m_missile, fPoint(0.f, 0.f), fPoint(100.f, 30.f), fPoint(100.f, 0.f), 0.07f, 8);
 	GetAnimator()->CreateAnimation(L"Lmissile1", m_missile, fPoint(0.f, 0.f), fPoint(100.f, 30.f), fPoint(100.f, 0.f), 0.07f, 8, true);
-
+	GetAnimator()->CreateAnimation(L"Mis1Dead", m_midead, fPoint(0.f, 0.f), fPoint(60.f, 60.f), fPoint(60.f, 0.f), 0.1f, 6);
 	
 }
 
@@ -33,6 +34,7 @@ CMissile* CMissile::Clone()
 
 void CMissile::update()
 {
+	
 	
 	fPoint pos = GetPos();
 	pos.x += m_fSpeed * m_fvDir.x * fDT;
@@ -69,6 +71,10 @@ void CMissile::update_animation()
 	{
 		GetAnimator()->Play(L"Lmissile1");
 	}
+	if(fHP == 0)
+	{ 
+		GetAnimator()->Play(L"Mis1Dead");
+	}
 }
 
 
@@ -86,4 +92,19 @@ void CMissile::SetDir(float theta)
 
 void CMissile::OnCollisionEnter(CCollider* pOther)
 {
+	
+	CGameObject* pOtherObj = pOther->GetObj();
+	fPoint pos = GetPos();
+	if (pOtherObj->GetName() == L"Monster")
+	{
+		fHP -= 1;
+		SetDir(fPoint(0, 0));
+		SetPos(pos);
+		if (m_Delay >= 0.6f) {
+			if (m_Delay >= 0) {
+				DeleteObj(this);
+			}
+			m_Delay += fDT;
+		}
+	}
 }

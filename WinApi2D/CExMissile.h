@@ -1,21 +1,18 @@
 #pragma once
 #include "CGameObject.h"
 
-class CMissile : public CGameObject
+class CExMissile : public CGameObject
 {
 private:
-	CD2DImage* m_missile;
-	CD2DImage* m_midead;
+	CD2DImage* m_ExMissile;
 	fVec2 m_fvDir;
 	float m_fSpeed = 800.f;
-	float fHP = 1;
-
-	float m_Delay = 0.6f;
 
 public:
-	CMissile();
-	~CMissile();
-	virtual CMissile* Clone();
+	CExMissile();
+	virtual ~CExMissile();
+
+	virtual CExMissile* Clone();
 
 	virtual void update();
 	virtual void render();

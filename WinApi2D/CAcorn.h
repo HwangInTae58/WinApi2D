@@ -1,7 +1,6 @@
 #pragma once
 #include "CGameObject.h"
-
-class CMissile : public CGameObject
+class CAcorn : public CGameObject
 {
 private:
 	CD2DImage* m_missile;
@@ -10,12 +9,11 @@ private:
 	float m_fSpeed = 800.f;
 	float fHP = 1;
 
-	float m_Delay = 0.6f;
-
+	float m_Delay = 0;
 public:
-	CMissile();
-	~CMissile();
-	virtual CMissile* Clone();
+	CAcorn();
+	~CAcorn();
+	virtual CAcorn* Clone();
 
 	virtual void update();
 	virtual void render();
