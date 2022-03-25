@@ -12,7 +12,7 @@ CAcorn::~CAcorn()
 
 CAcorn* CAcorn::Clone()
 {
-	return nullptr;
+	return new CAcorn(*this);
 }
 
 void CAcorn::update()
