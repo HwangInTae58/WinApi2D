@@ -85,6 +85,9 @@ CupHead::CupHead()
 	GetAnimator()->CreateAnimation(L"LJM", m_jump, fPoint(0.f, 0.f), fPoint(70.f, 60.f), fPoint(70.f, 0.f), 0.05f, 8, true/*좌우 반전*/);
 
 	GetAnimator()->Play(L"RNone");
+
+	tPlaInfo info = {};
+	info.fPHP = 3;
 }
 
 CupHead::~CupHead()
@@ -147,7 +150,7 @@ void CupHead::OnCollision(CCollider* _pOther)
 
 void CupHead::OnCollisionEnter(CCollider* _pOther)
 {
-	tPlaInfo info = {};
+	
 
 	m_iCollCount++;
 	fPoint Pos = GetPos();
@@ -168,13 +171,12 @@ void CupHead::OnCollisionEnter(CCollider* _pOther)
 	}
 	if (_pOther->GetObj()->GetName() == L"AArcorn")
 	{
-		//왜 안사라지지?
 		m_eCurState = PLAYER_STATE::HIT;
-		info.fPHP -= 1;
+		m_pInfo.fPHP--;
 
 		DeleteObj(_pOther->GetObj());
 
-		if (info.fPHP == 0)
+		if (m_pInfo.fPHP == 0)
 		{
 			DeleteObj(this);
 		}

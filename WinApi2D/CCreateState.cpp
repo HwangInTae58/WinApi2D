@@ -28,7 +28,7 @@ void CCreateState::CreateAcorn()
 	acorn->SetPos(acornPos);
 	acorn->SetDir(fVec2(-5, 1));
 	CreateObj(acorn, GROUP_GAMEOBJ::MISSILE_MONSTER);
-	//TODO : 이거 왜 클론 안생기나여? 그리고 이거 3대맞고 왜 캐릭터가 안사라지는지 모르겠어요;;;;;
+	//TODO : 이거 왜 클론 안생기나여?
 	acornPos.y -= pMonster->GetScale().y / 8.f;
 	acornPos.x -= pMonster->GetScale().x / 3.5f;
 	acorn->Clone()->SetPos(acornPos2);
