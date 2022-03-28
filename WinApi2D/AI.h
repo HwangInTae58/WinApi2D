@@ -19,6 +19,8 @@ public:
 	CMonster* GetOwnerAI();
 	CState* GetState(STATE_MON state);
 	void SetCurState(STATE_MON state);
+	
+	CState* GetCurState() { return m_pCurState; }
 
 	void update();
 

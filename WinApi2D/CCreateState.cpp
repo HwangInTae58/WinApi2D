@@ -16,17 +16,18 @@ CCreateState::~CCreateState()
 
 void CCreateState::CreateAcorn()
 {
-	//TODO : 여기 생성이 안되니까 몬스터 클래스에서 생성을 시도
+	pMonster = GetMonster();
+	CAcorn* acorn = new CAcorn;
+
 	fPoint acornPos = pMonster->GetPos();
 
-	CAcorn* acorn = new CAcorn;
 	acorn->SetPos(acornPos);
-	if (crafting == true)
-	{
-		acorn->SetDir(fVec2(-1, 0));
-		acornPos.x += pMonster->GetScale().x / 2.f;
-	}
+
+	acorn->SetDir(fVec2(-1, 0));
+	acornPos.x -= pMonster->GetScale().x / 2.f;
+	CreateObj(acorn, GROUP_GAMEOBJ::MISSILE_MONSTER);
 }
+
 
 void CCreateState::update()
 {
@@ -35,12 +36,16 @@ void CCreateState::update()
 	pMonster = GetMonster();
 	//Creat 애니메이션 출력하고
 	pMonster->GetAnimator()->Play(L"MonCreate");
+	
 	if (m_fDT >= 1.3f)
 	{
 		pMonster->GetAnimator()->Play(L"MonCreateIng");
+		if (AttackCount == 0)
+	
+		CreateAcorn();
 		if (m_fDT >= 5.f) {
 			crafting = true;
-			CreateAcorn();
+			
 			ChangeAIState(GetOwnerAI(), STATE_MON::IDLE);
 		}
 	}

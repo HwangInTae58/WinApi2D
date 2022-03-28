@@ -138,52 +138,29 @@ void CupHead::OnCollision(CCollider* _pOther)
 			m_eCurState = PLAYER_STATE::IDLE;
 		}
 	}
-	if (_pOther->GetObj()->GetName() == L"Monster")
-	{
-
-		m_Hit = true;
-		m_fDir.x = 3000.f;
-
-		//애니메이션 재생
-		//
-		fHP--;
-		if (fHP <= 0)
-		{
-			DeleteObj(this);
-		}
-	}
 	SetPos(vPos);
 }
 
 void CupHead::OnCollisionEnter(CCollider* _pOther)
 {
 	m_iCollCount++;
-	fPoint vPos = GetPos();
+	fPoint Pos = GetPos();
 	if (_pOther->GetObj()->GetName() == L"Tile")
 	{	
 		m_isGravity = false;
 		m_Gravity = 0.f;
 		m_blsFloor = true;
-		if (vPos.y < _pOther->GetFinalPos().y)
+		if (Pos.y < _pOther->GetFinalPos().y)
 		{
 			m_eCurState = PLAYER_STATE::IDLE;
 		}
 	}
 	if (_pOther->GetObj()->GetName() == L"Monster")
 	{
-		
-		m_Hit = true;
 		m_fDir.x = 3000.f;
-		
-		//애니메이션 재생
-		//
-		fHP--;
-		if (fHP <= 0)
-		{
-			DeleteObj(this);
-		}
+		Pos.x -= m_fDir.x * fDT;
 	}
-	SetPos(vPos);
+	SetPos(Pos);
 }
 
 void CupHead::OnCollisionExit(CCollider* _pOther)

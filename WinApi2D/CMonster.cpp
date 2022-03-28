@@ -6,7 +6,10 @@
 #include "AI.h"
 #include "CIdleState.h"
 #include "CTraceState.h"
+#include "CState.h"
 #include "CCreateState.h"
+#include "CAcorn.h"
+
 CMonster::CMonster()
 {
 	m_pAI = nullptr;
@@ -66,7 +69,6 @@ CMonster* CMonster::Create(MON_TYPE type, fPoint pos)
 		pAI->AddState(new CIdleState(STATE_MON::IDLE));
 		pAI->AddState(new CTraceState(STATE_MON::TRACE));
 		pAI->AddState(new CCreateState(STATE_MON::CREATE));
-		
 
 		pAI->SetCurState(STATE_MON::IDLE);
 		pMon->SetMonInfo(info);
@@ -95,6 +97,7 @@ void CMonster::render()
 	pos = CCameraManager::getInst()->GetRenderPos(pos);
 
 	component_render();
+
 }
 
 void CMonster::update()
@@ -114,10 +117,13 @@ void CMonster::update()
 
 
 
+
+
 const tMonInfo& CMonster::GetMonInfo()
 {
 	return m_tInfo;
 }
+
 
 
 void CMonster::update_animation()

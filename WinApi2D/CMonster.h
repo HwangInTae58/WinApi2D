@@ -2,6 +2,7 @@
 #include "CGameObject.h"
 
 class CD2DImage;
+class CState;
 class AI;
 
 struct tMonInfo
@@ -42,7 +43,6 @@ public:
 
 	
 	const tMonInfo& GetMonInfo();
-
 	void update_animation();
 	void SetAI(AI* ai);
 	void SetMonInfo(const tMonInfo& info);

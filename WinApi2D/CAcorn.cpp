@@ -30,11 +30,19 @@ void CAcorn::update()
 {
 	fPoint pos = GetPos();
 
+	pos.x += m_fSpeed * m_fvDir.x * fDT;
+	pos.y += m_fSpeed * m_fvDir.y * fDT;
 
+
+	SetPos(pos);
 	if (pos.x < 0 || pos.x > WINSIZEX
 		|| pos.y < 0 || pos.y > WINSIZEY) {
 		DeleteObj(this);
 	}
+
+	
+	update_animation();
+	GetAnimator()->update();
 }
 
 void CAcorn::render()
@@ -44,7 +52,7 @@ void CAcorn::render()
 
 void CAcorn::update_animation()
 {
-
+	GetAnimator()->Play(L"Arcorn");
 }
 
 void CAcorn::SetDir(fVec2 vec)
