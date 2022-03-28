@@ -171,6 +171,7 @@ void CupHead::OnCollisionEnter(CCollider* _pOther)
 	}
 	if (_pOther->GetObj()->GetName() == L"AArcorn")
 	{
+
 		m_eCurState = PLAYER_STATE::HIT;
 		m_pInfo.fPHP--;
 
@@ -179,6 +180,7 @@ void CupHead::OnCollisionEnter(CCollider* _pOther)
 		if (m_pInfo.fPHP == 0)
 		{
 			DeleteObj(this);
+			//ChangeScn(GROUP_SCENE::TITLE);
 		}
 
 	}

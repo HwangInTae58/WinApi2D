@@ -6,7 +6,7 @@ private:
 	CD2DImage* m_Acorn;
 	CD2DImage* m_AcornFire;
 	fVec2 m_fvDir;
-	float m_fSpeed = 650.f;
+	float m_fSpeed = 0.f;
 	float fHP = 1;
 
 	float m_Delay = 0;

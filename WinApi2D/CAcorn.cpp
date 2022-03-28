@@ -31,9 +31,15 @@ void CAcorn::update()
 {
 	fPoint pos = GetPos();
 	
-	
+	m_Delay += fDT;
+	if (m_Delay >= 0.56f)
+	{
+		m_fSpeed = 650.f;
+	}
 	pos.x += m_fSpeed * m_fvDir.x * fDT;
 	pos.y += m_fSpeed * m_fvDir.y * fDT;
+
+
 
 	SetPos(pos);
 	if (pos.x < 0 || pos.x > WINSIZEX
@@ -54,7 +60,7 @@ void CAcorn::render()
 void CAcorn::update_animation()
 {
 	GetAnimator()->Play(L"Arcorn");
-	if (m_Delay >= 0.56)
+	if (m_Delay >= 0.56f)
 	{
 		GetAnimator()->Play(L"Arcornfire");
 	}
