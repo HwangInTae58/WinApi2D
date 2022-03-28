@@ -14,6 +14,8 @@ private:
 	CAcorn* pAcorn;
 
 	int AttackCount = 0;
+	float m_AttfDT;
+
 	bool crafting = false;
 public:
 	CCreateState(STATE_MON state);

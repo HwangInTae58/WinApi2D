@@ -6,15 +6,16 @@ CAcorn::CAcorn()
 {
 	m_fvDir = fVec2(0, 0);
 	m_Acorn = CResourceManager::getInst()->LoadD2DImage(L"ACORN", L"texture\\Boss\\Cagney Carnation\\create\\Acorn.png");
-
-	SetScale(fPoint(80.f, 80.f));
-	SetName(L"arcorn");
+	m_AcornFire = CResourceManager::getInst()->LoadD2DImage(L"ACORN", L"texture\\Boss\\Cagney Carnation\\create\\Acorn.png");
+	SetScale(fPoint(60.f, 60.f));
+	SetName(L"AArcorn");
 
 	CreateCollider();
-	GetCollider()->SetScale(fPoint(60.f, 60.f));
+	GetCollider()->SetScale(fPoint(40.f, 40.f));
 
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"Arcorn", m_Acorn, fPoint(0.f, 0.f), fPoint(60.f, 60.f), fPoint(60.f, 0.f), 0.07f, 12);
+	GetAnimator()->CreateAnimation(L"Arcorn", m_Acorn, fPoint(0.f, 0.f), fPoint(60.f, 60.f), fPoint(60.f, 0.f), 0.07f, 8);
+	GetAnimator()->CreateAnimation(L"Arcornfire", m_AcornFire, fPoint(480.f, 0.f), fPoint(60.f, 60.f), fPoint(60.f, 0.f), 0.06f, 4);
 }
 
 CAcorn::~CAcorn()
@@ -29,10 +30,10 @@ CAcorn* CAcorn::Clone()
 void CAcorn::update()
 {
 	fPoint pos = GetPos();
-
+	
+	
 	pos.x += m_fSpeed * m_fvDir.x * fDT;
 	pos.y += m_fSpeed * m_fvDir.y * fDT;
-
 
 	SetPos(pos);
 	if (pos.x < 0 || pos.x > WINSIZEX
@@ -53,6 +54,10 @@ void CAcorn::render()
 void CAcorn::update_animation()
 {
 	GetAnimator()->Play(L"Arcorn");
+	if (m_Delay >= 0.56)
+	{
+		GetAnimator()->Play(L"Arcornfire");
+	}
 }
 
 void CAcorn::SetDir(fVec2 vec)
@@ -66,16 +71,12 @@ void CAcorn::SetDir(float theta)
 	m_fvDir.y = (float)sin(theta);
 }
 
-void CAcorn::OnCollisionEnter(CCollider* pOther)
+void CAcorn::OnCollision(CCollider* pOther)
 {
 	CGameObject* pOtherObj = pOther->GetObj();
 	fPoint pos = GetPos();
 	if (pOtherObj->GetName() == L"Player")
 	{
-		fHP -= 1;
-		SetDir(fPoint(0, 0));
-		SetPos(pos);
-
 		DeleteObj(this);
 	}
 }

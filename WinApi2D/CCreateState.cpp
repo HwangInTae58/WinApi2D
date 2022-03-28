@@ -20,18 +20,27 @@ void CCreateState::CreateAcorn()
 	CAcorn* acorn = new CAcorn;
 
 	fPoint acornPos = pMonster->GetPos();
+	fPoint acornPos2 = pMonster->GetPos();
 
+	acornPos.y -= pMonster->GetScale().y / 4.f;
+	acornPos.x -= pMonster->GetScale().x / 3.5f;
+	crafting = true;
 	acorn->SetPos(acornPos);
-
-	acorn->SetDir(fVec2(-1, 0));
-	acornPos.x -= pMonster->GetScale().x / 2.f;
+	acorn->SetDir(fVec2(-5, 1));
 	CreateObj(acorn, GROUP_GAMEOBJ::MISSILE_MONSTER);
+	//TODO : 이거 왜 클론 안생기나여? 그리고 이거 3대맞고 왜 캐릭터가 안사라지는지 모르겠어요;;;;;
+	acornPos.y -= pMonster->GetScale().y / 8.f;
+	acornPos.x -= pMonster->GetScale().x / 3.5f;
+	acorn->Clone()->SetPos(acornPos2);
+	acorn->Clone()->SetDir(fVec2(-1, 7));
+
+	
+	
 }
 
 
 void CCreateState::update()
 {
-	crafting = false;
 	m_fDT += fDT;
 	pMonster = GetMonster();
 	//Creat 애니메이션 출력하고
@@ -40,12 +49,14 @@ void CCreateState::update()
 	if (m_fDT >= 1.3f)
 	{
 		pMonster->GetAnimator()->Play(L"MonCreateIng");
-		if (AttackCount == 0)
-	
-		CreateAcorn();
-		if (m_fDT >= 5.f) {
-			crafting = true;
-			
+		if(AttackCount == 0)
+		{
+			CreateAcorn();
+			AttackCount++;
+		}
+		if (m_fDT >= 3.f) {
+			crafting = false;
+			AttackCount = 0;
 			ChangeAIState(GetOwnerAI(), STATE_MON::IDLE);
 		}
 	}

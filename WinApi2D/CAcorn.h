@@ -4,11 +4,13 @@ class CAcorn : public CGameObject
 {
 private:
 	CD2DImage* m_Acorn;
+	CD2DImage* m_AcornFire;
 	fVec2 m_fvDir;
-	float m_fSpeed = 750.f;
+	float m_fSpeed = 650.f;
 	float fHP = 1;
 
 	float m_Delay = 0;
+
 public:
 	CAcorn();
 	~CAcorn();
@@ -23,6 +25,6 @@ public:
 	void SetDir(fVec2 vec);
 	void SetDir(float theta);
 
-	void OnCollisionEnter(CCollider* pOther);
+	void OnCollision(CCollider* pOther);
 };
 

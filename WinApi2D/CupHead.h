@@ -1,7 +1,10 @@
 #pragma once
 #include "CGameObject.h"
 
-
+struct tPlaInfo
+{
+	float fPHP = 3.f;
+};
 enum class PLAYER_STATE
 {
 	INTRO,
@@ -25,6 +28,8 @@ class CupHead : public CGameObject
 private:
 
 	static CupHead* instance;
+
+	tPlaInfo m_pInfo;
 
 	//벡터 사용 정리
 	CD2DImage* m_Intro;
@@ -62,8 +67,6 @@ private:
 	float JumpForce =700;
 	bool JumpKeyDown = false;
 
-	float fHP = 3.f;
-
 public:
 	
 	CupHead();
@@ -79,6 +82,7 @@ public:
 
 	virtual void update();
 	virtual void render();
+
 
 	void update_move();
 	void update_animation();

@@ -98,6 +98,10 @@ CupHead* CupHead::Clone()
 
 void CupHead::update()
 {
+
+	
+	//m_Hit = false;
+
 	if (m_Hit)
 	{
 		m_eCurState = PLAYER_STATE::HIT;
@@ -143,6 +147,8 @@ void CupHead::OnCollision(CCollider* _pOther)
 
 void CupHead::OnCollisionEnter(CCollider* _pOther)
 {
+	tPlaInfo info = {};
+
 	m_iCollCount++;
 	fPoint Pos = GetPos();
 	if (_pOther->GetObj()->GetName() == L"Tile")
@@ -159,6 +165,20 @@ void CupHead::OnCollisionEnter(CCollider* _pOther)
 	{
 		m_fDir.x = 3000.f;
 		Pos.x -= m_fDir.x * fDT;
+	}
+	if (_pOther->GetObj()->GetName() == L"AArcorn")
+	{
+		//왜 안사라지지?
+		m_eCurState = PLAYER_STATE::HIT;
+		info.fPHP -= 1;
+
+		DeleteObj(_pOther->GetObj());
+
+		if (info.fPHP == 0)
+		{
+			DeleteObj(this);
+		}
+
 	}
 	SetPos(Pos);
 }
@@ -222,7 +242,6 @@ void CupHead::update_move()
 	fPoint pos = GetPos();
 	
 	
-	m_Hit = false;
 	m_fVelocity = 0.f;
 	//딜레이
 	
@@ -230,6 +249,7 @@ void CupHead::update_move()
 	if(m_blsFloor == true){
 	JumpKeyDown = false;
 	}
+
 	if (!m_blsFloor)
 	{
 		m_fDir.y -= m_Gravity * fDT;
@@ -292,16 +312,18 @@ void CupHead::update_move()
 
 void CupHead::update_animation()
 {
+	
+
 	switch (m_eCurState)
 	{
 	case PLAYER_STATE::HIT:
-	{
-		if (m_Hit)
 		{
-			GetAnimator()->Play(L"HIT");
+			if (m_Hit == true)
+				{
+					GetAnimator()->Play(L"HIT");
+				}
 		}
-	}
-	break;
+		break;
 	case PLAYER_STATE::IDLE:
 	{
 		if (false == m_iCurDir && m_blsFloor && !m_Attack)
@@ -348,11 +370,11 @@ void CupHead::update_animation()
 	break;
 	case PLAYER_STATE::ATTACK:
 	{
-		if (false == m_iCurDir && m_blsFloor)
+		if (false == m_iCurDir && m_blsFloor && !m_Hit)
 		{
 			GetAnimator()->Play(L"LSS");
 		}
-		else if (true == m_iCurDir && m_blsFloor)
+		else if (true == m_iCurDir && m_blsFloor && !m_Hit)
 		{
 			GetAnimator()->Play(L"RSS");
 		}
