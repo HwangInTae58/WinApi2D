@@ -101,15 +101,25 @@ CupHead* CupHead::Clone()
 
 void CupHead::update()
 {
+	//TODO : 플레이어 몬스터 둘다 죽는 모션 만들기 몬스터 추가적인 패턴 1개이상 더 만들기
 
-	
-	//m_Hit = false;
-
+	//HIT시 상황 적용
 	if (m_Hit)
 	{
 		m_eCurState = PLAYER_STATE::HIT;
 	}
+	if (true == m_Hit)
+	{
+		m_HitTime += fDT;
+	}
+	if (0.42f <= m_HitTime)
+	{
+		m_Hit = false;
+		m_HitTime = 0.f;
+	}
+	
 
+	//공격시 딜레이
 	if (m_Attack)
 	{
 		if (m_DelayTime >= 0.23f) {
@@ -174,13 +184,11 @@ void CupHead::OnCollisionEnter(CCollider* _pOther)
 
 		m_eCurState = PLAYER_STATE::HIT;
 		m_pInfo.fPHP--;
-
-		DeleteObj(_pOther->GetObj());
+		m_Hit = true;
 
 		if (m_pInfo.fPHP == 0)
 		{
-			DeleteObj(this);
-			//ChangeScn(GROUP_SCENE::TITLE);
+			ChangeScn(GROUP_SCENE::TITLE);
 		}
 
 	}
@@ -307,7 +315,7 @@ void CupHead::update_move()
 		m_eCurState = PLAYER_STATE::EXATTACK;
 			//CreateEX();
 	}
-	if (0.f == m_fVelocity && PLAYER_STATE::JUMP != m_eCurState && PLAYER_STATE::ATTACK != m_eCurState)
+	if (0.f == m_fVelocity && PLAYER_STATE::JUMP != m_eCurState && PLAYER_STATE::ATTACK != m_eCurState && PLAYER_STATE::HIT != m_eCurState)
 	{
 		m_eCurState = PLAYER_STATE::IDLE;
 	}

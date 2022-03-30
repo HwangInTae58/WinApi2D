@@ -53,6 +53,8 @@ private:
 	
 	bool m_Attack = false;
 	bool m_EXAttack = false;
+
+	float m_HitTime = 0.f;
 	bool m_Hit = false;
 
 	float m_Delay = 0;

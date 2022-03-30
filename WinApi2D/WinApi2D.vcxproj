@@ -161,6 +161,7 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CCreateState.h" />
     <ClInclude Include="CD2DImage.h" />
+    <ClInclude Include="CDead.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CExMissile.h" />
     <ClInclude Include="CGameObject.h" />
@@ -191,6 +192,8 @@
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="CupHead.h" />
+    <ClInclude Include="CVictory.h" />
+    <ClInclude Include="CVictoryObj.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="CMap.h" />
@@ -213,6 +216,7 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CCreateState.cpp" />
     <ClCompile Include="CD2DImage.cpp" />
+    <ClCompile Include="CDead.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CExMissile.cpp" />
     <ClCompile Include="CGameObject.cpp" />
@@ -244,6 +248,8 @@
     <ClCompile Include="CUIManager.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CupHead.cpp" />
+    <ClCompile Include="CVictory.cpp" />
+    <ClCompile Include="CVictoryObj.cpp" />
     <ClCompile Include="WinApi2D.cpp" />
   </ItemGroup>
   <ItemGroup>

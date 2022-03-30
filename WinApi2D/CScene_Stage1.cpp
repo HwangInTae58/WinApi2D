@@ -21,7 +21,7 @@ void CScene_Stage1::update()
 
 	if (KeyDown(VK_ESCAPE))
 	{
-		ChangeScn(GROUP_SCENE::TITLE);
+		ChangeScn(GROUP_SCENE::VICTORY);
 	}
 }
 
@@ -63,7 +63,7 @@ void CScene_Stage1::Enter()
 
 
 
-	start();
+	
 }
 
 void CScene_Stage1::Exit()

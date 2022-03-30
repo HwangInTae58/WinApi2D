@@ -100,6 +100,15 @@
     <Filter Include="Engine\Component\AI\State\Trace">
       <UniqueIdentifier>{5d3cb464-2331-477c-a87e-26346f8d6e99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\YOUDIED">
+      <UniqueIdentifier>{56113846-15cc-448f-b4ca-380d147e3c8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\YOUWIN">
+      <UniqueIdentifier>{412b8b93-f251-4ebb-8044-b3a624350041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\TOOL">
+      <UniqueIdentifier>{3ae2c31f-fa09-47ee-b622-fffd188a65d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -164,9 +173,6 @@
     </ClInclude>
     <ClInclude Include="CEventManager.h">
       <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene_Tool.h">
-      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="CAnimator.h">
       <Filter>Engine\Component\Animator</Filter>
@@ -252,6 +258,18 @@
     <ClInclude Include="CTraceState.h">
       <Filter>Engine\Component\AI\State\Trace</Filter>
     </ClInclude>
+    <ClInclude Include="CVictory.h">
+      <Filter>Scene\YOUWIN</Filter>
+    </ClInclude>
+    <ClInclude Include="CDead.h">
+      <Filter>Scene\YOUDIED</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Tool.h">
+      <Filter>Scene\TOOL</Filter>
+    </ClInclude>
+    <ClInclude Include="CVictoryObj.h">
+      <Filter>Scene\YOUWIN</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinApi2D.cpp">
@@ -298,9 +316,6 @@
     </ClCompile>
     <ClCompile Include="CEventManager.cpp">
       <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene_Tool.cpp">
-      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="CAnimator.cpp">
       <Filter>Engine\Component\Animator</Filter>
@@ -385,6 +400,18 @@
     </ClCompile>
     <ClCompile Include="CTraceState.cpp">
       <Filter>Engine\Component\AI\State\Trace</Filter>
+    </ClCompile>
+    <ClCompile Include="CVictory.cpp">
+      <Filter>Scene\YOUWIN</Filter>
+    </ClCompile>
+    <ClCompile Include="CDead.cpp">
+      <Filter>Scene\YOUDIED</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Tool.cpp">
+      <Filter>Scene\TOOL</Filter>
+    </ClCompile>
+    <ClCompile Include="CVictoryObj.cpp">
+      <Filter>Scene\YOUWIN</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

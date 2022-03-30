@@ -4,6 +4,8 @@
 #include "CScene_Title.h"
 #include "CScene_Stage1.h"
 #include "CScene_Tool.h"
+#include "CVictory.h"
+#include "CDead.h"
 
 CSceneManager::CSceneManager()
 {
@@ -47,14 +49,23 @@ void CSceneManager::render()
 
 void CSceneManager::init()
 {
+	//타이틀
 	m_arrScene[(size_t)GROUP_SCENE::TITLE] = new CScene_Title;
 	m_arrScene[(size_t)GROUP_SCENE::TITLE]->SetName(L"Title_Scene");
 
+	//스테이지1
 	m_arrScene[(size_t)GROUP_SCENE::STAGE_01] = new CScene_Stage1;
 	m_arrScene[(size_t)GROUP_SCENE::STAGE_01]->SetName(L"Stage1_Scene");
 
+	//툴씬
 	m_arrScene[(size_t)GROUP_SCENE::TOOL] = new CScene_Tool;
 	m_arrScene[(size_t)GROUP_SCENE::TOOL]->SetName(L"Tool_Scene");
+
+	m_arrScene[(size_t)GROUP_SCENE::VICTORY] = new CVictory;
+	m_arrScene[(size_t)GROUP_SCENE::VICTORY]->SetName(L"Victory_Scene");
+
+	m_arrScene[(size_t)GROUP_SCENE::DEAD] = new CDead;
+	m_arrScene[(size_t)GROUP_SCENE::DEAD]->SetName(L"Dead_Scene");
 
 	m_pCurScene = m_arrScene[(size_t)GROUP_SCENE::TITLE];
 	m_pCurScene->Enter();
