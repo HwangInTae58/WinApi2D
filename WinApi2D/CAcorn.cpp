@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CAcorn.h"
+#include "CupHead.h"
 #include "CCollider.h"
 #include "CAnimator.h"
 CAcorn::CAcorn()
@@ -31,11 +32,7 @@ void CAcorn::update()
 {
 	fPoint pos = GetPos();
 	
-	m_Delay += fDT;
-	if (m_Delay >= 0.56f)
-	{
-		m_fSpeed = 650.f;
-	}
+
 	pos.x += m_fSpeed * m_fvDir.x * fDT;
 	pos.y += m_fSpeed * m_fvDir.y * fDT;
 
@@ -57,10 +54,15 @@ void CAcorn::render()
 	component_render();
 }
 
+void CAcorn::SetSpeed(float other)
+{
+	m_fSpeed = other;
+}
+
 void CAcorn::update_animation()
 {
 	GetAnimator()->Play(L"Arcorn");
-	if (m_Delay >= 0.56f)
+	if (m_fSpeed > 0.f)
 	{
 		GetAnimator()->Play(L"Arcornfire");
 	}

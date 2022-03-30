@@ -1,10 +1,16 @@
 #pragma once
 #include "CGameObject.h"
+
+
+
 class CAcorn : public CGameObject
 {
 private:
 	CD2DImage* m_Acorn;
 	CD2DImage* m_AcornFire;
+
+	
+
 	fVec2 m_fvDir;
 	float m_fSpeed = 0.f;
 	float fHP = 1;
@@ -19,6 +25,9 @@ public:
 	virtual void update();
 	virtual void render();
 
+	void SetSpeed(float other);
+
+	
 
 	void update_animation();
 

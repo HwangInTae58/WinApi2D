@@ -4,7 +4,6 @@
 class CD2DImage;
 class CState;
 class AI;
-
 struct tMonInfo
 {
 	float fHP;
@@ -40,7 +39,6 @@ public:
 
 	virtual void render();
 	virtual void update();
-
 	
 	const tMonInfo& GetMonInfo();
 	void update_animation();

@@ -2,6 +2,7 @@
 #include "CState.h"
 
 class CAcorn;
+class CupHead;
 
 class CCreateState : public CState
 {
@@ -10,8 +11,13 @@ class CCreateState : public CState
 private:
 	float m_fDT;
 
+	CupHead* TarGet;
 	CMonster* pMonster;
 	CAcorn* pAcorn;
+
+	CAcorn* acorn;
+	CAcorn* acorn2;
+	CAcorn* acorn3;
 
 	int AttackCount = 0;
 	float m_AttfDT;
@@ -22,6 +28,8 @@ public:
 	virtual ~CCreateState();
 
 	void CreateAcorn();
+
+	
 
 	virtual void update();
 	virtual void Enter();

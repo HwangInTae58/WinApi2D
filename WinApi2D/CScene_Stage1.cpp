@@ -27,18 +27,19 @@ void CScene_Stage1::update()
 
 void CScene_Stage1::Enter()
 {
+
 	// 타일 로딩
 	wstring path = CPathManager::getInst()->GetContentPath();
 	path += L"tile\\Stage1";
 	LoadTile(path);
-
+	
 	// Player 추가
 	CupHead* pPlayer = new CupHead;
 	AddObject(pPlayer, GROUP_GAMEOBJ::PLAYER);
 
 	CMonster* pMon = CMonster::Create(MON_TYPE::NORMAL, fPoint(1100.f, 420.f));
 	AddObject(pMon, GROUP_GAMEOBJ::MONSTER);
-
+	
 	//맵추가
 	CMap* map = new CMap;
 	map->Load(L"Map_Start", L"texture\\map\\Stage1.png");

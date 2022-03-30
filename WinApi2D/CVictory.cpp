@@ -19,6 +19,7 @@ void CVictory::update()
 
 void CVictory::render()
 {
+	
 }
 
 void CVictory::Enter()
