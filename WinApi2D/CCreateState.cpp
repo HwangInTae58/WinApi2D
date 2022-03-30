@@ -18,23 +18,30 @@ void CCreateState::CreateAcorn()
 {
 	pMonster = GetMonster();
 	CAcorn* acorn = new CAcorn;
-
+	CAcorn* acorn2 = new CAcorn;
+	CAcorn* acorn3 = new CAcorn;
 	fPoint acornPos = pMonster->GetPos();
 	fPoint acornPos2 = pMonster->GetPos();
+	fPoint acornPos3 = pMonster->GetPos();
 
 	acornPos.y -= pMonster->GetScale().y / 4.f;
 	acornPos.x -= pMonster->GetScale().x / 3.5f;
 	crafting = true;
 	acorn->SetPos(acornPos);
-	acorn->SetDir(fVec2(-5, 1));
+	acorn->SetDir(fVec2(-4, 1));
 	CreateObj(acorn, GROUP_GAMEOBJ::MISSILE_MONSTER);
-	//TODO : 이거 왜 클론 안생기나여?
-	acornPos.y -= pMonster->GetScale().y / 8.f;
-	acornPos.x -= pMonster->GetScale().x / 3.5f;
-	acorn->Clone()->SetPos(acornPos2);
-	acorn->Clone()->SetDir(fVec2(-1, 7));
 
+	acornPos2.y -= pMonster->GetScale().y / 12.f;
+	acornPos2.x -= pMonster->GetScale().x / 3.5f;
+	acorn2->SetPos(acornPos2);
+	acorn2->SetDir(fVec2(-4, 1));
+	CreateObj(acorn2, GROUP_GAMEOBJ::MISSILE_MONSTER);
 	
+	acornPos3.y -= pMonster->GetScale().y / 10000.f;
+	acornPos3.x -= pMonster->GetScale().x / 3.5f;
+	acorn3->SetPos(acornPos3);
+	acorn3->SetDir(fVec2(-3, 1));
+	CreateObj(acorn3, GROUP_GAMEOBJ::MISSILE_MONSTER);
 	
 }
 
