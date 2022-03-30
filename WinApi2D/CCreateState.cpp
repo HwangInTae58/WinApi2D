@@ -51,6 +51,7 @@ void CCreateState::update()
 		pMonster->GetAnimator()->Play(L"MonCreateIng");
 		if(AttackCount == 0)
 		{
+
 			CreateAcorn();
 			AttackCount++;
 		}
